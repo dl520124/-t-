@@ -9,6 +9,7 @@ import numpy as np
 if __name__ == '__main__':
   jiesuan1 = './huodong/jiesuan1.png'
   jiesuan2 = './huodong/jiesuan2.png'
+  jiesuan3 = './jiesuan/jiesuan3.png'
   tiaozhan = './yuhun/tiaozhan.png'
   duiyou2 = './yuhun/duiyou2.png'
   jiangli = './huodong/jiangli.png'
@@ -28,8 +29,6 @@ if __name__ == '__main__':
   print(h)
   tt = LiuXingIT(h)
 
-
-  handle =  win32gui.FindWindow(None,'MuMu模拟器12-1')  #第一个参数是类目（可以不写），第二个参数名字
 
   num = 0;
   err = 0;
@@ -87,6 +86,24 @@ if __name__ == '__main__':
         print('结算2点击x=', x, 'y=', y)
         time.sleep(1)
 
+      #
+      # x, y, p = tt.locateImg(jiesuan3)
+      # if p > 0.85:
+      #
+      #   # 生成符合指定范围的正态分布的 x 和 y 坐标
+      #   mu, sigma = 1200, 30  # 均值和标准差
+      #   x = np.random.normal(mu, sigma)
+      #   while x < 1144 or x > 1256:
+      #     x = np.random.normal(mu, sigma)
+      #
+      #   mu, sigma = 437, 100  # 均值和标准差
+      #   y = np.random.normal(mu, sigma)
+      #   while y < 185 or y > 689:
+      #     y = np.random.normal(mu, sigma)
+      #   tt.mouseClick(x, y, 'left')
+      #   print('结算3点击x=', x, 'y=', y)
+      #   time.sleep(1)
+
       x, y, p = tt.locateImg(jiangli)
       if p > 0.85:
           print('识别奖励')
@@ -136,7 +153,7 @@ if __name__ == '__main__':
          break;
 
 
-      if num>=186:
+      if num>=194:
          print('已经打了',num,'局，结束御魂！')
          break;
 
