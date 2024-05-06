@@ -106,6 +106,29 @@ class LiuXingIT(object):
             dc.DeleteDC()
             win32gui.ReleaseDC(self.h, hdc)
 
+    def hudushot(self, region=None):
+            result = win32gui.GetWindowRect(self.h)
+            w = result[2] - result[0]
+            h = result[3] - result[1]
+            hdc = win32gui.GetWindowDC(self.h)
+            dc = win32ui.CreateDCFromHandle(hdc)
+            mdc = dc.CreateCompatibleDC()
+            bm = win32ui.CreateBitmap()
+            if region == None:
+                bm.CreateCompatibleBitmap(dc, w, h)
+                mdc.SelectObject(bm)
+                mdc.BitBlt((0, 0), (w, h), dc, (0, 0), win32con.SRCCOPY)
+            else:
+                bm.CreateCompatibleBitmap(dc, region[2] - region[0], region[3] - region[1])
+                mdc.SelectObject(bm)
+                mdc.BitBlt((0, 0), (w, h), dc, (region[0], region[1]), win32con.SRCCOPY)
+            bm.SaveBitmapFile(mdc, '2.bmp')#截图为2.bmp
+            win32gui.DeleteObject(bm.GetHandle())
+            mdc.DeleteDC()
+            dc.DeleteDC()
+            win32gui.ReleaseDC(self.h, hdc)
+
+
     def locateImg(self, src, region=None):
         self.shot(region)#截图区域
         img=cv2.imread('1.bmp')#读取图片
@@ -119,8 +142,8 @@ class LiuXingIT(object):
 
     def locateAllImg(self, src, region=None):
         res = []
-        self.shot(region) #截图
-        img=cv2.imread('1.bmp')  #读取截图
+        self.hudushot(region) #截图
+        img=cv2.imread('2.bmp')  #读取截图
         template = cv2.imread(src)
         result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
         yloc, xloc = numpy.where(result >= 0.98)
