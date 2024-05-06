@@ -106,7 +106,7 @@ if __name__ == '__main__':
           time.sleep(1)
 
 
-      if num>=200:
+      if num>=186:
          print('已经打了',num,'局，结束御魂！')
          break;
 
