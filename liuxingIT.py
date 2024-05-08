@@ -1,3 +1,6 @@
+import os
+import time
+
 import numpy
 import win32api
 import win32con
@@ -100,7 +103,21 @@ class LiuXingIT(object):
                 bm.CreateCompatibleBitmap(dc, region[2] - region[0], region[3] - region[1])
                 mdc.SelectObject(bm)
                 mdc.BitBlt((0, 0), (w, h), dc, (region[0], region[1]), win32con.SRCCOPY)
-            bm.SaveBitmapFile(mdc, '1.bmp')#截图为1.bmp
+
+            # 检查是否成功创建了位图
+            if bm.GetHandle() == 0:
+                print("Error: Failed to create bitmap")
+                return
+
+            filename = '1.bmp'
+            while os.path.exists(filename):
+                try:
+                    os.unlink(filename)
+                except PermissionError:  # 文件被其他程序占用，等待一段时间再尝试删除
+                    time.sleep(0.1)
+                    continue
+                break
+            bm.SaveBitmapFile(mdc, filename)  # 保存新文件
             win32gui.DeleteObject(bm.GetHandle())
             mdc.DeleteDC()
             dc.DeleteDC()
@@ -122,7 +139,16 @@ class LiuXingIT(object):
                 bm.CreateCompatibleBitmap(dc, region[2] - region[0], region[3] - region[1])
                 mdc.SelectObject(bm)
                 mdc.BitBlt((0, 0), (w, h), dc, (region[0], region[1]), win32con.SRCCOPY)
-            bm.SaveBitmapFile(mdc, '2.bmp')#截图为2.bmp
+
+           # ---------------------------中间是自己修改的
+            filename = '2.bmp'
+            if os.path.exists(filename):
+                os.remove(filename)  # 如果文件已存在，先删除它
+            bm.SaveBitmapFile(mdc, filename)  # 保存新文件
+            # ---------------------------自己修改的
+
+
+            #bm.SaveBitmapFile(mdc, '2.bmp')#截图为2.bmp
             win32gui.DeleteObject(bm.GetHandle())
             mdc.DeleteDC()
             dc.DeleteDC()
@@ -130,9 +156,9 @@ class LiuXingIT(object):
 
 
     def locateImg(self, src, region=None):
-        self.shot(region)#截图区域
+        self.shot(region)#截图
         img=cv2.imread('1.bmp')#读取图片
-        template = cv2.imread(src)#将要对比的图转模式
+        template = cv2.imread(src)#传入参数图片转模式
         result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
         if region != None:
@@ -158,8 +184,8 @@ class LiuXingIT(object):
     #灰度图
     def locateAllHuDuImg(self, src, region=None):
         res = []
-        self.shot(region)
-        img = cv2.imread('1.bmp', cv2.IMREAD_GRAYSCALE)
+        self.hudushot(region)
+        img = cv2.imread('2.bmp', cv2.IMREAD_GRAYSCALE)
         # cv2.imshow('Gray image', img)
         # cv2.waitKey(0) #等待，必要的步骤，不然一闪而过
         # cv2.destroyAllWindows()#关闭所以的窗口

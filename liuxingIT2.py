@@ -1,3 +1,6 @@
+import os
+import time
+
 import numpy
 import win32api
 import win32con
@@ -99,7 +102,52 @@ class LiuXingIT2(object):
                 bm.CreateCompatibleBitmap(dc, region[2] - region[0], region[3] - region[1])
                 mdc.SelectObject(bm)
                 mdc.BitBlt((0, 0), (w, h), dc, (region[0], region[1]), win32con.SRCCOPY)
-            bm.SaveBitmapFile(mdc, '2.bmp')
+
+                # ---------------------------中间是自己修改的
+            filename = '3.bmp'
+            if os.path.exists(filename):
+                os.remove(filename)  # 如果文件已存在，先删除它
+            bm.SaveBitmapFile(mdc, filename)  # 保存新文件
+            # ---------------------------自己修改的
+
+
+            #bm.SaveBitmapFile(mdc, '2.bmp')
+            win32gui.DeleteObject(bm.GetHandle())
+            mdc.DeleteDC()
+            dc.DeleteDC()
+            win32gui.ReleaseDC(self.h, hdc)
+
+    def hudushot(self, region=None):
+            result = win32gui.GetWindowRect(self.h)
+            w = result[2] - result[0]
+            h = result[3] - result[1]
+            hdc = win32gui.GetWindowDC(self.h)
+            dc = win32ui.CreateDCFromHandle(hdc)
+            mdc = dc.CreateCompatibleDC()
+            bm = win32ui.CreateBitmap()
+            if region == None:
+                bm.CreateCompatibleBitmap(dc, w, h)
+                mdc.SelectObject(bm)
+                mdc.BitBlt((0, 0), (w, h), dc, (0, 0), win32con.SRCCOPY)
+            else:
+                bm.CreateCompatibleBitmap(dc, region[2] - region[0], region[3] - region[1])
+                mdc.SelectObject(bm)
+                mdc.BitBlt((0, 0), (w, h), dc, (region[0], region[1]), win32con.SRCCOPY)
+
+           # ---------------------------中间是自己修改的
+            filename = '4.bmp'
+            while os.path.exists(filename):
+                try:
+                    os.unlink(filename)
+                except PermissionError:  # 文件被其他程序占用，等待一段时间再尝试删除
+                    time.sleep(0.1)
+                    continue
+                break
+            bm.SaveBitmapFile(mdc, filename)  # 保存新文件
+            # ---------------------------自己修改的
+
+
+            #bm.SaveBitmapFile(mdc, '2.bmp')#截图为2.bmp
             win32gui.DeleteObject(bm.GetHandle())
             mdc.DeleteDC()
             dc.DeleteDC()
@@ -107,7 +155,7 @@ class LiuXingIT2(object):
 
     def locateImg(self, src, region=None):
         self.shot(region)
-        img=cv2.imread('2.bmp')
+        img=cv2.imread('3.bmp')
         template = cv2.imread(src)
         result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
@@ -128,6 +176,32 @@ class LiuXingIT2(object):
                 res.append((x + region[0], y + region[1]))
             else:
                 res.append((x, y))
+        return res
+
+    def locateAllHuDuImg(self, src, region=None):
+        res = []
+        self.hudushot(region)
+        img = cv2.imread('4.bmp', cv2.IMREAD_GRAYSCALE)
+        # cv2.imshow('Gray image', img)
+        # cv2.waitKey(0) #等待，必要的步骤，不然一闪而过
+        # cv2.destroyAllWindows()#关闭所以的窗口
+
+        template = cv2.imread(src, cv2.IMREAD_GRAYSCALE)
+        # cv2.imshow('Gray image1', template)
+        # cv2.waitKey(0) #等待，必要的步骤，不然一闪而过
+        # cv2.destroyAllWindows()#关闭所以的窗口
+
+        result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
+        threshold = 0.80
+        yloc, xloc = numpy.where(result >= threshold)
+
+        # 计算每个匹配点的匹配度并加入到结果列表中
+        for x, y in zip(xloc, yloc):
+            match_prob = result[y, x]  # 获取对应位置的匹配度
+            if region != None:
+                res.append(((x + region[0], y + region[1]), match_prob))
+            else:
+                res.append(((x, y), match_prob))
         return res
 
     def getPixel(self, x, y):

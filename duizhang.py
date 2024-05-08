@@ -153,7 +153,7 @@ if __name__ == '__main__':
          break;
 
 
-      if num>=194:
+      if num>=200:
          print('已经打了',num,'局，结束御魂！')
          break;
 

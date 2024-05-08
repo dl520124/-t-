@@ -18,18 +18,6 @@ if __name__ == '__main__':
         u = 1 - t
         return u ** 2 * p0 + 2 * u * t * p1 + t ** 2 * p2
 
-
-    # 起始点、控制点和结束点
-    start_point = np.array([1089, 155])
-    control_point =np.array([766, 240])
-    end_point = np.array([296, 188])
-
-    # 生成一系列参数值
-    t_values = np.linspace(0, 1, num=100)
-
-    # 计算贝塞尔曲线上的点
-    points = [bezier(start_point, control_point, end_point, t) for t in t_values]
-
     xiaoguai = './tansuo/xiaoguai.png'
     boss = './tansuo/boss.png'
     jiesuan1 = './tansuo/jiesuan1.png'
@@ -38,129 +26,218 @@ if __name__ == '__main__':
     queren = './tansuo/queren.png'
     k28 = './tansuo/k28.png'
     tansuo = './tansuo/tansuo.png'
-    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-1')
+
+    yingbing = './tansuo/yingbing.png'
+
+    # 悬赏
+    xuanshang = './huodong/xuanshang.png'
+    gouxie = './huodong/gouxie.png'
+    jieshou = './huodong/jieshou.png'
+    jujue = './huodong/jujue.png'
+
+    yao = './tansuo/yao.png'
+    weizhi1 = './tansuo/weizhi1.png'
+    waibaoxiang = './tansuo/waibaoxiang.png'
+    waibaoxiang2 = './tansuo/waibaoxiang2.png'
+    tuichu = './tansuo/tuichu.png'
+
+
+    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
     print(handle)
     h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
     print(h)
     tt = LiuXingIT(h)
-    x = 0
+    number = 0;
+    baonum =0;
     while True:
         time.sleep(1)
-        tt.shot()
-        x, y, p = tt.locateImg(boss, None)
-        if p<0.85:
-            x,y,p = tt.locateImg(xiaoguai,None)
-            if p>0.85:
-                x = random.randint(x-15,x+15)
-                y = random.randint(y-15,y+15)
-                tt.mouseClick(x,y,'left')
-                print('找到小怪,点击了:',x,y)
-                while True:
-                    if x > 5:
-                        break
-                    time.sleep(0.5)
-                    x, y, p = tt.locateImg(jiesuan1, None)
-                    if p > 0.85:
-                        tt.mouseClick(x, y, 'left')
-                        print('点击结算1')
-                    else:
-                        x = x+1
-                        pass
-                    x, y, p = tt.locateImg(jiesuan2, None)
-                    if p > 0.85:
-                        time.sleep(1)
-                        tt.mouseClick(x, y, 'left')
-                        print('点击结算2')
-                        break
-                    else:
-                        x = x + 1
-                        pass
-            else:
-                print('找不到小怪，该滑动了')
-                time.sleep(3)
-                x, y, p = tt.locateImg(xiaoguai, None)
-                x1, y1, p1 = tt.locateImg(boss, None)
-                x2, y2, p2 = tt.locateImg(k28, None)
-                x3, y3, p3 = tt.locateImg(tansuo, None)
-                x4, y4, p4 = tt.locateImg(neibaoxiang, None)
-                x5, y5, p5 = tt.locateImg(queren, None)
-                if p <0.85 and p1<0.85 and p2 <0.85 and p3<0.85 and p4<0.85 and p5<0.85:
-                    # 定义鼠标按下和释放的消息常量
-                    WM_LBUTTONDOWN = 0x0201
-                    WM_LBUTTONUP = 0x0202
-
-                    # 遍历贝塞尔曲线上的点
-                    for point in points:
-                        x, y = int(point[0]), int(point[1])
-
-                        # 发送鼠标移动消息
-                        win32api.PostMessage(h, win32con.WM_MOUSEMOVE, 0, win32api.MAKELONG(x, y))
-
-                        # 发送鼠标左键按下消息
-                        win32api.PostMessage(h, WM_LBUTTONDOWN, win32con.MK_LBUTTON,
-                                             win32api.MAKELONG(x, y))
-
-                        time.sleep(0.01)  # 控制每个点之间的时间间隔
-
-                    # 发送鼠标左键释放消息
-                    win32api.PostMessage(h, WM_LBUTTONUP, 0, 0)
-                else:
-                   pass
-                pass
-        else:
-            x = random.randint(x - 15, x + 15)
-            y = random.randint(y - 15, y + 15)
-            tt.mouseClick(x, y, 'left')
-            print('找到boss,点击了:', x, y)
-            while True:
-                time.sleep(0.5)
-                x, y, p = tt.locateImg(jiesuan1, None)
-                if p > 0.85:
-                    tt.mouseClick(x, y, 'left')
-                    print('点击结算1')
-                else:
-                    pass
-                x, y, p = tt.locateImg(jiesuan2, None)
-                if p > 0.85:
-                    time.sleep(1)
-                    tt.mouseClick(x, y, 'left')
-                    tt.mouseClick(x, y, 'left')
-                    print('点击结算2')
-                    break
-                else:
-                    pass
-        x, y, p = tt.locateImg(neibaoxiang, None)
-        print('判断内宝箱')
-        if  p>0.85:
-            x = random.randint(40,75)
-            y = random.randint(40, 75)
-            tt.mouseClick(x,y)
-            print('点击返回')
-        else:
-            pass
-        x, y, p = tt.locateImg(queren, None)
-        print('判断确认')
+        # 悬赏
+        x, y, p = tt.locateImg(xuanshang)
         if p > 0.85:
-                x = random.randint(718, 835)
-                y = random.randint(390, 420)
-                tt.mouseClick(x, y)
-                print('点击确认')
-        else:
-            pass
-        x, y, p = tt.locateImg(k28, None)
-        print('判断K28')
-        if  p>0.85:
-            x = random.randint(1075,1228)
-            y = random.randint(566, 632)
-            tt.mouseClick(x,y)
-        else:
-            pass
-        x, y, p = tt.locateImg(tansuo, None)
-        print("判断探索")
-        if  p>0.85:
-            x = random.randint(900,986)
-            y = random.randint(523, 553)
-            tt.mouseClick(x,y)
-        else:
-            pass
+            x, y, p = tt.locateImg(gouxie)
+            if p > 0.85:
+                x, y, p = tt.locateImg(jieshou)
+                if p > 0.85:
+                    tt.mouseClick(x, y, 'left')
+                    print('接了勾协')
+            else:
+                x, y, p = tt.locateImg(jujue)
+                if p > 0.85:
+                    tt.mouseClick(x, y, 'left')
+                    print('哪个傻逼给我其他悬赏')
+        x, y, p = tt.locateImg(yingbing, None)
+        if p > 0.85:
+            print('探索里面')
+            x, y, p = tt.locateImg(boss, None)
+            if p < 0.80:
+                x, y, p = tt.locateImg(xiaoguai, None)
+                if p > 0.80:
+                    x = random.randint(x - 15, x + 15)
+                    y = random.randint(y - 15, y + 15)
+                    tt.mouseClick(x, y, 'left')
+                    print('找到小怪,点击了:', x, y)
+                else:
+                    time.sleep(2)
+                    x, y, p = tt.locateImg(neibaoxiang, None)
+                    if p > 0.80:
+                        print('有内宝箱')
+                        time.sleep(1)
+                        x = random.randint(40, 75)
+                        y = random.randint(40, 75)
+                        tt.mouseClick(x, y)
+                        print('点击返回')
+                        time.sleep(1.5)
+                        x, y, p = tt.locateImg(queren, None)
+                        if p > 0.85:
+                            x = random.randint(718, 835)
+                            y = random.randint(390, 420)
+                            tt.mouseClick(x, y)
+                            print('点击确认')
+                    else:
+                        time.sleep(1.5)
+                        x, y, p = tt.locateImg(queren, None)
+                        if p > 0.85:
+                            x = random.randint(718, 835)
+                            y = random.randint(390, 420)
+                            tt.mouseClick(x, y)
+                            print('点击确认')
+                        x, y, p = tt.locateImg(yingbing, None)
+                        if p > 0.85:
+                            print('没有内宝箱也找不到小怪且在探索画面')
+                            x, y, p = tt.locateImg(weizhi1, None)
+                            if p < 0.85:
+                                # 起始点、控制点和结束点
+                                x1 = random.randint(1000, 1200)
+                                y1 = random.randint(150, 180)
+
+                                x2 = random.randint(600, 800)
+                                y2 = random.randint(200, 400)
+
+                                x3 = random.randint(200, 400)
+                                y3 = random.randint(100, 300)
+                                print('起始坐标', x1, y1)
+                                print('控制坐标', x2, y2)
+                                print('结束坐标', x3, y3)
+
+                                start_point = np.array([x1, y1])
+                                control_point = np.array([x2, y2])
+                                end_point = np.array([x3, y3])
+
+                                # 生成一系列参数值
+                                num = random.randint(10, 50)
+                                t_values = np.linspace(0, 1, num=num)
+                                print('贝塞尔num', num)
+
+                                # 计算贝塞尔曲线上的点
+                                points = [bezier(start_point, control_point, end_point, t) for t in t_values]
+
+                                # 定义鼠标按下和释放的消息常量
+                                WM_LBUTTONDOWN = 0x0201
+                                WM_LBUTTONUP = 0x0202
+                                # 遍历贝塞尔曲线上的点
+                                for point in points:
+                                    x, y = int(point[0]), int(point[1])
+                                    # 发送鼠标移动消息
+                                    win32api.PostMessage(h, win32con.WM_MOUSEMOVE, 0, win32api.MAKELONG(x, y))
+                                    # 发送鼠标左键按下消息
+                                    win32api.PostMessage(h, WM_LBUTTONDOWN, win32con.MK_LBUTTON,
+                                                         win32api.MAKELONG(x, y))
+                                    time.sleep(random.uniform(0.01, 0.03))  # 控制每个点之间的时间间隔
+                                # 发送鼠标左键释放消息
+                                win32api.PostMessage(h, WM_LBUTTONUP, 0, 0)
+                                time.sleep(1.5)
+                            else:
+                                print('识别未知1')
+                                x = random.randint(40, 75)
+                                y = random.randint(40, 75)
+                                tt.mouseClick(x, y)
+                                print('点击返回')
+            else:
+                x = random.randint(x - 15, x + 15)
+                y = random.randint(y - 15, y + 15)
+                tt.mouseClick(x, y, 'left')
+                print('找到boss,点击了:', x, y)
+
+
+        x, y, p = tt.locateImg(jiesuan1)
+        if p > 0.80:
+            # 生成符合指定范围的正态分布的 x 和 y 坐标
+            mu, sigma = 1200, 30  # 均值和标准差
+            x = np.random.normal(mu, sigma)
+            while x < 1144 or x > 1256:
+                x = np.random.normal(mu, sigma)
+
+            mu, sigma = 437, 100  # 均值和标准差
+            y = np.random.normal(mu, sigma)
+            while y < 185 or y > 689:
+                y = np.random.normal(mu, sigma)
+            tt.mouseClick(x, y, 'left')
+            print('结算1点击x=', x, 'y=', y)
+            time.sleep(1)
+            number = number + 1;
+            print('number=', number);
+
+        x, y, p = tt.locateImg(jiesuan2)
+        if p > 0.85:
+            time.sleep(1)
+            # 生成符合指定范围的正态分布的 x 和 y 坐标
+            mu, sigma = 1200, 30  # 均值和标准差
+            x = np.random.normal(mu, sigma)
+            while x < 1144 or x > 1256:
+                x = np.random.normal(mu, sigma)
+
+            mu, sigma = 437, 100  # 均值和标准差
+            y = np.random.normal(mu, sigma)
+            while y < 185 or y > 689:
+                y = np.random.normal(mu, sigma)
+            tt.mouseClick(x, y, 'left')
+            print('结算2点击x=', x, 'y=', y)
+            time.sleep(1)
+
+        x, y, p = tt.locateImg(yao, region=(400, 4, 467, 73))
+        if p > 0.85:
+            time.sleep(1)
+            print('已经点击', baonum, '次宝箱')
+            print('不是探索页面')
+            x, y, p = tt.locateImg(waibaoxiang2, None)
+            if p > 0.85:
+                print('有宝箱')
+                x, y, p = tt.locateImg(tuichu, None)
+                if p > 0.85:
+                    print('有退出按钮')
+                    tt.mouseClick(x, y)
+                else:
+                    x, y, p = tt.locateImg(waibaoxiang2, None)
+                    if p > 0.85:
+                        tt.mouseClick(x, y)
+                        baonum = baonum+1;
+                        print('已经点击',baonum,'次宝箱')
+
+            else:
+                print('没有宝箱')
+                x, y, p = tt.locateImg(tansuo, region=(863, 500, 1020, 576))
+                print("判断探索")
+                if p > 0.85:
+                    x = random.randint(900, 986)
+                    y = random.randint(523, 553)
+                    tt.mouseClick(x, y)
+                else:
+                    pass
+
+                x, y, p = tt.locateImg(k28, None)
+                print('判断K28')
+                if p > 0.85:
+                    x = random.randint(1075, 1228)
+                    y = random.randint(566, 632)
+                    tt.mouseClick(x, y)
+                else:
+                    pass
+        x, y, p = tt.locateImg(weizhi1, None)
+        if p > 0.85:
+            print('识别未知1')
+            x = random.randint(40, 75)
+            y = random.randint(40, 75)
+            tt.mouseClick(x, y)
+            print('点击返回')
+
 
