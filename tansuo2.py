@@ -4,7 +4,7 @@ import win32api
 import win32con
 import win32gui
 import win32ui
-from liuxingIT import LiuXingIT
+from liuxingIT2 import LiuXingIT2
 import liuxingIT
 import time
 import random
@@ -44,11 +44,11 @@ if __name__ == '__main__':
     tuichu = './tansuo/tuichu.png'
 
 
-    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
+    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-1')
     print(handle)
     h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
     print(h)
-    tt = LiuXingIT(h)
+    tt = LiuXingIT2(h)
     number = 0;
     baonum =0;
     sainum = 0;
@@ -110,6 +110,7 @@ if __name__ == '__main__':
                             print('没有内宝箱也找不到小怪且在探索画面')
                             x, y, p = tt.locateImg(weizhi1, None)
                             if p < 0.85:
+
                                 # 起始点、控制点和结束点
                                 x1 = random.randint(1000, 1200)
                                 y1 = random.randint(150, 180)
@@ -150,9 +151,9 @@ if __name__ == '__main__':
                                 # 发送鼠标左键释放消息
                                 win32api.PostMessage(h, WM_LBUTTONUP, 0, 0)
                                 time.sleep(1.5)
-                                sainum = sainum + 1;
+                                sainum = sainum+1;
 
-                                if sainum >= 2:
+                                if sainum>=2:
                                     print('滑动超过3次，退出')
                                     x = random.randint(40, 75)
                                     y = random.randint(40, 75)
@@ -166,6 +167,7 @@ if __name__ == '__main__':
                                         tt.mouseClick(x, y)
                                         print('点击确认')
 
+
                             else:
                                 print('识别未知1')
                                 x = random.randint(40, 75)
@@ -177,6 +179,7 @@ if __name__ == '__main__':
                 y = random.randint(y - 15, y + 15)
                 tt.mouseClick(x, y, 'left')
                 print('找到boss,点击了:', x, y)
+
         else:
             print('找不到樱饼')
 
@@ -246,14 +249,13 @@ if __name__ == '__main__':
                 else:
                     pass
 
-                x, y, p = tt.locateImg(k5, region=(1000,120,1270,700))
+                x, y, p = tt.locateImg(k5, region=(1000,120,1270,700))#章节区域
                 print('判断K2')
-                if p > 0.80:
-                    x = random.randint(x - 53, x + 88)
-                    y = random.randint(y, y + 79)
+                if p > 0.85:
+                    x = random.randint(x-53, x+88)
+                    y = random.randint(y, y+79)
                     tt.mouseClick(x, y)
                 else:
-                    #print('找不到k2')
                     pass
         x, y, p = tt.locateImg(weizhi1, None)
         if p > 0.85:

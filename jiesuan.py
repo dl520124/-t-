@@ -31,8 +31,6 @@ if __name__ == '__main__':
   tt = LiuXingIT(h)
 
 
-  handle =  win32gui.FindWindow(None,'MuMu模拟器12')  #第一个参数是类目（可以不写），第二个参数名字
-
   while True:
 
       #悬赏

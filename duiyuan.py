@@ -30,8 +30,10 @@ if __name__ == '__main__':
 
 
   num = 0;
+  xunerr = 0;
 
   while True:
+      xunerr = xunerr+1;
 
       #悬赏
       x, y, p = tt.locateImg(xuanshang)
@@ -67,6 +69,7 @@ if __name__ == '__main__':
         print('结算1点击x=',x,'y=',y)
         time.sleep(1)
         num = num + 1;
+        xunerr = 0;
         print('num=', num);
 
       x, y, p = tt.locateImg(jiesuan2)
@@ -121,6 +124,10 @@ if __name__ == '__main__':
           print('奖励点击x=', x, 'y=', y)
           time.sleep(1)
 
+
+      if xunerr>=80:
+         print('掉线，退出')
+         break;
 
       if num>=200:
          print('已经打了',num,'局，结束御魂！')
