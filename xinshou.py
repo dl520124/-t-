@@ -30,6 +30,10 @@ if __name__ == '__main__':
   sandian3 = './xinshou/sandian3.png'
   sandian4 = './xinshou/sandian4.png'
   sandian5 = './xinshou/sandian5.png'
+  sandian6 = './xinshou/sandian6.png'
+  sandian7 = './xinshou/sandian7.png'
+  sandian8 = './xinshou/sandian8.png'
+  yanjing2 = './xinshou/yanjing2.png'
   kuaijin = './xinshou/kuaijin.png'
   zhandou = './xinshou/zhandou.png'
   zhandou2 = './xinshou/zhandou2.png'
@@ -135,7 +139,6 @@ if __name__ == '__main__':
         time.sleep(1)
 
       matches = tt.locateAllHuDuImg(sandian3)
-
       if matches:
         # 假设我们只关心最高匹配度的第一个点
         best_match = max(matches, key=lambda item: item[1])  # 找到匹配度最高的点
@@ -149,7 +152,6 @@ if __name__ == '__main__':
         pass
 
       matches = tt.locateAllHuDuImg(sandian2)
-
       if matches:
         # 假设我们只关心最高匹配度的第一个点
         best_match = max(matches, key=lambda item: item[1])  # 找到匹配度最高的点
@@ -162,9 +164,48 @@ if __name__ == '__main__':
       else:
         pass
 
-        matches = tt.locateAllHuDuImg(dunpai)
+      matches = tt.locateAllHuDuImg(sandian6)
+      if matches:
+            # 假设我们只关心最高匹配度的第一个点
+            best_match = max(matches, key=lambda item: item[1])  # 找到匹配度最高的点
+            x, y = best_match[0]  # 解包坐标
+            p = best_match[1]  # 匹配度
+            tt.mouseClick(x, y, 'left')
+            print('点击三点6', x, 'y=', y, '匹配度:', p)
+            time.sleep(1)
 
-        if matches:
+      matches = tt.locateAllHuDuImg(sandian7)
+      if matches:
+          # 假设我们只关心最高匹配度的第一个点
+          best_match = max(matches, key=lambda item: item[1])  # 找到匹配度最高的点
+          x, y = best_match[0]  # 解包坐标
+          p = best_match[1]  # 匹配度
+          tt.mouseClick(x, y, 'left')
+          print('点击三点7', x, 'y=', y, '匹配度:', p)
+          time.sleep(1)
+
+      matches = tt.locateAllHuDuImg(sandian8)
+      if matches:
+          # 假设我们只关心最高匹配度的第一个点
+          best_match = max(matches, key=lambda item: item[1])  # 找到匹配度最高的点
+          x, y = best_match[0]  # 解包坐标
+          p = best_match[1]  # 匹配度
+          tt.mouseClick(x, y, 'left')
+          print('点击三点8', x, 'y=', y, '匹配度:', p)
+          time.sleep(1)
+
+      matches = tt.locateAllHuDuImg(yanjing2)
+      if matches:
+          # 假设我们只关心最高匹配度的第一个点
+          best_match = max(matches, key=lambda item: item[1])  # 找到匹配度最高的点
+          x, y = best_match[0]  # 解包坐标
+          p = best_match[1]  # 匹配度
+          tt.mouseClick(x, y, 'left')
+          print('点击yanjing2', x, 'y=', y, '匹配度:', p)
+          time.sleep(1)
+
+      matches = tt.locateAllHuDuImg(dunpai)
+      if matches:
             # 假设我们只关心最高匹配度的第一个点
             best_match = max(matches, key=lambda item: item[1])  # 找到匹配度最高的点
             x, y = best_match[0]  # 解包坐标
@@ -172,13 +213,9 @@ if __name__ == '__main__':
             tt.mouseClick(x, y, 'left')
             print('点击dunpai', x, 'y=', y, '匹配度:', p)
             time.sleep(1)
-            pass
-        else:
-            pass
 
-        matches = tt.locateAllHuDuImg(qingming)
-
-        if matches:
+      matches = tt.locateAllHuDuImg(qingming)
+      if matches:
             # 假设我们只关心最高匹配度的第一个点
             best_match = max(matches, key=lambda item: item[1])  # 找到匹配度最高的点
             x, y = best_match[0]  # 解包坐标
@@ -186,12 +223,9 @@ if __name__ == '__main__':
             tt.mouseClick(x, y, 'left')
             print('点击清明', x, 'y=', y, '匹配度:', p)
             time.sleep(1)
-            pass
-        else:
-            pass
 
-        matches = tt.locateAllHuDuImg(qingming2)
-        if matches:
+      matches = tt.locateAllHuDuImg(qingming2)
+      if matches:
             # 假设我们只关心最高匹配度的第一个点
             best_match = max(matches, key=lambda item: item[1])  # 找到匹配度最高的点
             x, y = best_match[0]  # 解包坐标
@@ -199,9 +233,6 @@ if __name__ == '__main__':
             tt.mouseClick(x, y, 'left')
             print('点击清明', x, 'y=', y, '匹配度:', p)
             time.sleep(1)
-            pass
-        else:
-            pass
 
 
         # 遇到基础术士

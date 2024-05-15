@@ -104,12 +104,15 @@ class LiuXingIT3(object):
                 mdc.SelectObject(bm)
                 mdc.BitBlt((0, 0), (w, h), dc, (region[0], region[1]), win32con.SRCCOPY)
             #bm.SaveBitmapFile(mdc, '1.bmp')#截图为1.bmp
-        #---------------------------中间是自己修改的
             filename = '5.bmp'
-            if os.path.exists(filename):
-                os.remove(filename)  # 如果文件已存在，先删除它
+            while os.path.exists(filename):
+                try:
+                    os.unlink(filename)
+                except PermissionError:  # 文件被其他程序占用，等待一段时间再尝试删除
+                    time.sleep(0.1)
+                    continue
+                break
             bm.SaveBitmapFile(mdc, filename)  # 保存新文件
-        # ---------------------------自己修改的
             win32gui.DeleteObject(bm.GetHandle())
             mdc.DeleteDC()
             dc.DeleteDC()

@@ -125,11 +125,11 @@ if __name__ == '__main__':
           time.sleep(1)
 
 
-      if xunerr>=80:
-         print('掉线，退出')
-         break;
+      # if xunerr>=80:
+      #    print('掉线，退出')
+      #    break;
 
-      if num>=200:
+      if num>=12:
          print('已经打了',num,'局，结束御魂！')
          break;
 

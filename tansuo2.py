@@ -26,7 +26,10 @@ if __name__ == '__main__':
     queren = './tansuo/queren.png'
     k28 = './tansuo/k28.png'
     k2 = './tansuo/k2.png'
+    k4 = './tansuo/k4.png'
     k5 = './tansuo/k5.png'
+    k9 = './tansuo/k9.png'
+    k10 = './tansuo/k10.png'
     tansuo = './tansuo/tansuo.png'
 
     yingbing = './tansuo/yingbing.png'
@@ -249,7 +252,7 @@ if __name__ == '__main__':
                 else:
                     pass
 
-                x, y, p = tt.locateImg(k5, region=(1000,120,1270,700))#章节区域
+                x, y, p = tt.locateImg(k4, region=(1000,120,1270,700))#章节区域
                 print('判断K2')
                 if p > 0.85:
                     x = random.randint(x-53, x+88)

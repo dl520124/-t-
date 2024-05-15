@@ -26,7 +26,10 @@ if __name__ == '__main__':
     queren = './tansuo/queren.png'
     k28 = './tansuo/k28.png'
     k2 = './tansuo/k2.png'
+    k4 = './tansuo/k4.png'
     k5 = './tansuo/k5.png'
+    k9 = './tansuo/k9.png'
+    k10 = './tansuo/k10.png'
     tansuo = './tansuo/tansuo.png'
 
     yingbing = './tansuo/yingbing.png'
@@ -234,7 +237,6 @@ if __name__ == '__main__':
                         tt.mouseClick(x, y)
                         baonum = baonum+1;
                         print('已经点击',baonum,'次宝箱')
-
             else:
                 print('没有宝箱')
                 x, y, p = tt.locateImg(tansuo, region=(863, 500, 1020, 576))
@@ -246,7 +248,7 @@ if __name__ == '__main__':
                 else:
                     pass
 
-                x, y, p = tt.locateImg(k5, region=(1000,120,1270,700))
+                x, y, p = tt.locateImg(k4, region=(1000,120,1270,700))
                 print('判断K2')
                 if p > 0.80:
                     x = random.randint(x - 53, x + 88)
