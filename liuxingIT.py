@@ -179,7 +179,7 @@ class LiuXingIT(object):
 
         template = cv2.imread(src)
         result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
-        yloc, xloc = numpy.where(result >= 0.998)#原本是0.98
+        yloc, xloc = numpy.where(result >= 0.995)#原本是0.98
         for x, y in zip(xloc, yloc):
             if region != None:
                 res.append((x + region[0], y + region[1]))

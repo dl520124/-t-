@@ -25,6 +25,7 @@ if __name__ == '__main__':
   po = './jiesuan/po.png'
   qiguai = './jiesuan/qiguai.png'
   buzu = './jiesuan/buzu.png'
+  buzu2 = './jiesuan/buzu2.png'
 
   #悬赏
   xuanshang = './huodong/xuanshang.png'
@@ -82,7 +83,8 @@ if __name__ == '__main__':
 
 
   while True:
-    #查找有多少个失败
+
+    #查找有多少个失败，鸡肋，不太准
     if not flag:
       list = tt.locateAllImg(dabuguo)
       print(list)
@@ -149,9 +151,23 @@ if __name__ == '__main__':
       mouse_click(x, y)
       print('点击进攻')
       # 识别突破券不足
+      x, y, p = tt.locateImg(buzu2)
+      if p > 0.98:
+        print('突破券不足')
+        break
       x, y, p = tt.locateImg(buzu)
       if p > 0.80:
         break
+
+    x, y, p = tt.locateImg(buzu2)
+    if p > 0.98:
+      print('突破券不足')
+      break
+
+
+    x, y, p = tt.locateImg(buzu)
+    if p > 0.80:
+      break
 
     x, y, p2 = tt.locateImg(queding)
     if p2 > 0.85:
@@ -420,6 +436,13 @@ if __name__ == '__main__':
 
          else:
            print('没到9就失败那么多次')
+           turefaile == 0
+           x, y, p = tt.locateImg(tupotu, region=(807, 412, 1140, 543))
+           if p > 0.85:
+             x = random.randint(x - 180, x)
+             y = random.randint(y + 10, y + 80)
+             mouse_click(x, y)
+             print('识别突破9标志')
            pass
 
        #最后一次突破9
@@ -432,6 +455,7 @@ if __name__ == '__main__':
          turefaile = 1
          failed = 0
        time.sleep(1)
+
 
        x, y, p = tt.locateImg(jingong)
        if p > 0.85:
@@ -458,12 +482,12 @@ if __name__ == '__main__':
            mouse_click(x, y)
            turefaile = 0
 
-       x, y, p = tt.locateImg(dabuguo, region=(807, 412, 1140, 543))
-       if p < 0.95 and turefaile == 1:
-         print('打了突破9，进行新一轮')
-         tupo_state = 0
-         failed = 0
-         turefaile = 0
+       # x, y, p = tt.locateImg(dabuguo, region=(807, 412, 1140, 543))
+       # if p < 0.95 and turefaile == 1:
+       #   print('打了突破9，进行新一轮')
+       #   tupo_state = 0
+       #   failed = 0
+       #   turefaile = 0
 
 
        x, y, p = tt.locateImg(po, region=(807, 412, 1140, 543))

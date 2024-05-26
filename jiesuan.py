@@ -136,7 +136,9 @@ if __name__ == '__main__':
 
       x, y, p = tt.locateImg(wancheng)
       if p > 0.85:
-        print('突破已完成，不愧是tt，真棒棒！')
-        time.sleep(1)
-        break
+        x, y, p = tt.locateImg(tupotu)
+        if  p < 0.85:
+              print('突破已完成，不愧是tt，真棒棒！')
+              time.sleep(1)
+              break
 
