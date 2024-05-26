@@ -58,8 +58,9 @@ if __name__ == '__main__':
     number = 0;
     baonum =0;
     sainum = 0;
+    bossStop = 0;
     while True:
-        time.sleep(1)
+        # time.sleep(1)
         # 悬赏
         x, y, p = tt.locateImg(xuanshang)
         if p > 0.85:
@@ -87,16 +88,18 @@ if __name__ == '__main__':
                     print('找到小怪,点击了:', x, y)
                     sainum = 0;
                 else:
-                    time.sleep(2)
+                    # time.sleep(2)
                     x, y, p = tt.locateImg(neibaoxiang, None)
                     if p > 0.80:
                         print('有内宝箱')
-                        time.sleep(1)
-                        x = random.randint(40, 75)
-                        y = random.randint(40, 75)
-                        tt.mouseClick(x, y)
-                        print('点击返回')
-                        time.sleep(1.5)
+                        # time.sleep(1)
+                        x, y, p = tt.locateImg(queren, None)
+                        if p < 0.85:
+                            x = random.randint(40, 75)
+                            y = random.randint(40, 75)
+                            tt.mouseClick(x, y)
+                            print('点击返回')
+                        # time.sleep(1.5)
                         x, y, p = tt.locateImg(queren, None)
                         if p > 0.85:
                             x = random.randint(718, 835)
@@ -104,7 +107,7 @@ if __name__ == '__main__':
                             tt.mouseClick(x, y)
                             print('点击确认')
                     else:
-                        time.sleep(1.5)
+                        # time.sleep(1.5)
                         x, y, p = tt.locateImg(queren, None)
                         if p > 0.85:
                             x = random.randint(718, 835)
@@ -115,7 +118,8 @@ if __name__ == '__main__':
                         if p > 0.85:
                             print('没有内宝箱也找不到小怪且在探索画面')
                             x, y, p = tt.locateImg(weizhi1, None)
-                            if p < 0.85:
+                            print('bossStop',bossStop)
+                            if p < 0.85 and bossStop == 0:
                                 # 起始点、控制点和结束点
                                 x1 = random.randint(1000, 1200)
                                 y1 = random.randint(150, 180)
@@ -155,7 +159,7 @@ if __name__ == '__main__':
                                     time.sleep(random.uniform(0.01, 0.03))  # 控制每个点之间的时间间隔
                                 # 发送鼠标左键释放消息
                                 win32api.PostMessage(h, WM_LBUTTONUP, 0, 0)
-                                time.sleep(1.5)
+                                # time.sleep(1)
                                 sainum = sainum + 1;
 
                                 if sainum >= 2:
@@ -164,7 +168,7 @@ if __name__ == '__main__':
                                     y = random.randint(40, 75)
                                     tt.mouseClick(x, y)
                                     print('点击返回')
-                                    time.sleep(1.5)
+                                    # time.sleep(1.5)
                                     x, y, p = tt.locateImg(queren, None)
                                     if p > 0.85:
                                         x = random.randint(718, 835)
@@ -183,6 +187,7 @@ if __name__ == '__main__':
                 y = random.randint(y - 15, y + 15)
                 tt.mouseClick(x, y, 'left')
                 print('找到boss,点击了:', x, y)
+                bossStop = 1;
 
             x, y, p = tt.locateImg(tili)
             if p > 0.85:
@@ -208,13 +213,13 @@ if __name__ == '__main__':
                 y = np.random.normal(mu, sigma)
             tt.mouseClick(x, y, 'left')
             print('结算1点击x=', x, 'y=', y)
-            time.sleep(1)
+            # time.sleep(1)
             number = number + 1;
             print('number=', number);
 
         x, y, p = tt.locateImg(jiesuan2)
         if p > 0.85:
-            time.sleep(1)
+            # time.sleep(1)
             # 生成符合指定范围的正态分布的 x 和 y 坐标
             mu, sigma = 1200, 30  # 均值和标准差
             x = np.random.normal(mu, sigma)
@@ -227,11 +232,12 @@ if __name__ == '__main__':
                 y = np.random.normal(mu, sigma)
             tt.mouseClick(x, y, 'left')
             print('结算2点击x=', x, 'y=', y)
-            time.sleep(1)
+            # time.sleep(1)
 
         x, y, p = tt.locateImg(yao, region=(400, 4, 467, 73))
         if p > 0.85:
-            time.sleep(1)
+            bossStop = 0; #初始化boss滑动
+            # time.sleep(1)
             print('已经点击', baonum, '次宝箱')
             print('不是探索页面')
             x, y, p = tt.locateImg(waibaoxiang2, None)
