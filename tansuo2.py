@@ -48,6 +48,7 @@ if __name__ == '__main__':
     waibaoxiang2 = './tansuo/waibaoxiang2.png'
     tuichu = './tansuo/tuichu.png'
     tili = './tansuo/tili.png'
+    ji57 = './jiesuan/57ji.png'
 
 
     handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-1')
@@ -78,6 +79,7 @@ if __name__ == '__main__':
         x, y, p = tt.locateImg(yingbing, None)
         if p > 0.85:
             print('探索里面')
+            time.sleep(0.5)
             x, y, p = tt.locateImg(boss, None)
             if p < 0.80:
                 x, y, p = tt.locateImg(xiaoguai, None)
@@ -198,6 +200,10 @@ if __name__ == '__main__':
         else:
             print('找不到樱饼')
 
+        x, y, p = tt.locateImg(ji57)
+        if p > 0.95:
+            print("已经57级")
+            break
 
         x, y, p = tt.locateImg(jiesuan1)
         if p > 0.80:
@@ -264,12 +270,13 @@ if __name__ == '__main__':
                 else:
                     pass
 
-                x, y, p = tt.locateImg(k17, region=(1000,120,1270,700))
+                x, y, p = tt.locateImg(k28, region=(1000,120,1270,700))
                 print('判断K2')
                 if p > 0.80:
                     x = random.randint(x - 53, x + 88)
                     y = random.randint(y, y + 79)
                     tt.mouseClick(x, y)
+                    bossStop = 0;
                 else:
                     #print('找不到k2')
                     pass

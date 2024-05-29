@@ -4,7 +4,7 @@ import win32api
 import win32con
 import win32gui
 import win32ui
-from liuxingIT import LiuXingIT
+from liuxingIT2 import LiuXingIT2
 import liuxingIT
 import time
 import random
@@ -48,15 +48,16 @@ if __name__ == '__main__':
     waibaoxiang2 = './tansuo/waibaoxiang2.png'
     tuichu = './tansuo/tuichu.png'
     tili = './tansuo/tili.png'
-    ji57 = './jiesuan/57ji.png'
-    buzu3 = './jiesuan/buzu3.png'
+
+    queding = './jiesuan/queding.png'
+    tiaozhan = './yuhun/tiaozhan.png'
 
 
-    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
+    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-1')
     print(handle)
     h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
     print(h)
-    tt = LiuXingIT(h)
+    tt = LiuXingIT2(h)
     number = 0;
     baonum =0;
     sainum = 0;
@@ -80,7 +81,7 @@ if __name__ == '__main__':
         x, y, p = tt.locateImg(yingbing, None)
         if p > 0.85:
             print('探索里面')
-            time.sleep(0.5)
+            time.sleep(1)
             x, y, p = tt.locateImg(boss, None)
             if p < 0.80:
                 x, y, p = tt.locateImg(xiaoguai, None)
@@ -165,7 +166,7 @@ if __name__ == '__main__':
                                 # time.sleep(1)
                                 sainum = sainum + 1;
 
-                                if sainum >= 2:
+                                if sainum >= 3:
                                     print('滑动超过3次，退出')
                                     x = random.randint(40, 75)
                                     y = random.randint(40, 75)
@@ -201,6 +202,25 @@ if __name__ == '__main__':
         else:
             print('找不到樱饼')
 
+        x, y, p = tt.locateImg(tiaozhan)
+        if p > 0.95:
+            # 设置均值和标准差
+            mu_x, sigma_x = 1186, 15  # x坐标的均值和标准差
+            mu_y, sigma_y = 630, 10  # y坐标的均值和标准差
+            # mu_x, sigma_x = 1031.5, 15  # x坐标的均值和标准差
+            # mu_y, sigma_y = 574, 10  # y坐标的均值和标准差
+
+            # 生成符合正态分布的坐标点
+            x = np.random.normal(mu_x, sigma_x)
+            y = np.random.normal(mu_y, sigma_y)
+
+            # 限制坐标范围
+            x = np.clip(x, 1150, 1222)
+            y = np.clip(y, 596, 664)
+            # x = np.clip(x, 1000, 1063)
+            # y = np.clip(y, 547, 601)
+            tt.mouseClick(x, y, 'left')
+            print('点击挑战x=', x, 'y=', y)
 
 
 
@@ -237,68 +257,17 @@ if __name__ == '__main__':
                 y = np.random.normal(mu, sigma)
             tt.mouseClick(x, y, 'left')
             print('结算2点击x=', x, 'y=', y)
-            # time.sleep(1)
+            time.sleep(1.5)
 
-        x, y, p = tt.locateImg(yao, region=(400, 4, 467, 73))
-        if p > 0.85:
-            bossStop = 0; #初始化boss滑动
-            # time.sleep(1)
-            print('已经点击', baonum, '次宝箱')
-            print('不是探索页面')
-            x, y, p = tt.locateImg(waibaoxiang2, None)
-            if p > 0.85:
-                print('有宝箱')
-                x, y, p = tt.locateImg(tuichu, None)
-                if p > 0.85:
-                    print('有退出按钮')
-                    tt.mouseClick(x, y)
-                else:
-                    x, y, p = tt.locateImg(waibaoxiang2, None)
-                    if p > 0.85:
-                        tt.mouseClick(x, y)
-                        baonum = baonum+1;
-                        print('已经点击',baonum,'次宝箱')
-            else:
-                print('没有宝箱')
-                x, y, p = tt.locateImg(tansuo, region=(863, 500, 1020, 576))
-                print("判断探索")
-                if p > 0.85:
-                    x = random.randint(900, 986)
-                    y = random.randint(523, 553)
-                    tt.mouseClick(x, y)
-                else:
-                    pass
-
-                x, y, p = tt.locateImg(k28, region=(1000,120,1270,700))
-                print('判断K2')
-                if p > 0.80:
-                    x = random.randint(x - 53, x + 88)
-                    y = random.randint(y, y + 79)
-                    tt.mouseClick(x, y)
-                    bossStop = 0;
-                else:
-                    #print('找不到k2')
-                    pass
-        x, y, p = tt.locateImg(weizhi1, None)
-        if p > 0.85:
-            print('识别未知1')
-            x = random.randint(40, 75)
-            y = random.randint(40, 75)
+        x, y, p2 = tt.locateImg(queding)
+        if p2 > 0.85:
+            x = random.randint(x - 15, x + 15)
+            y = random.randint(y - 5, y + 5)
             tt.mouseClick(x, y)
-            print('点击返回')
+            bossStop = 0
+            print('点击确定')
 
-        x, y, p = tt.locateImg(ji57)
-        if p > 0.95:
-            print("已经57级")
+        if number>=100:
             break
-
-
-        x, y, p = tt.locateImg(buzu3)
-        if p > 0.94:
-            print('突破券满了')
-            break
-
-        # if number>=100:
-        #     break
 
 
