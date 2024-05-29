@@ -65,7 +65,7 @@ if __name__ == '__main__':
           y = np.random.normal(mu, sigma)
         tt.mouseClick(x, y, 'left')
         print('结算1点击x=',x,'y=',y)
-        time.sleep(1)
+
 
       x, y, p = tt.locateImg(jiesuan2)
       if p > 0.85:
@@ -82,7 +82,7 @@ if __name__ == '__main__':
           y = np.random.normal(mu, sigma)
         tt.mouseClick(x, y, 'left')
         print('结算2点击x=', x, 'y=', y)
-        time.sleep(1)
+
 
       x, y, p = tt.locateImg(shibai)
       if p > 0.85:
@@ -99,7 +99,7 @@ if __name__ == '__main__':
           y = np.random.normal(mu, sigma)
         tt.mouseClick(x, y, 'left')
         print('结算2点击x=', x, 'y=', y)
-        time.sleep(1)
+
 
       x, y, p = tt.locateImg(diancuo)
       if p > 0.85:
@@ -116,15 +116,15 @@ if __name__ == '__main__':
           y = np.random.normal(mu, sigma)
         tt.mouseClick(x, y, 'left')
         print('结算2点击x=', x, 'y=', y)
-        time.sleep(1)
+
 
       x, y, p = tt.locateImg(tupotu)
-      if p > 0.85:
+      x2, y2, p2 = tt.locateImg(jingong)
+      if p > 0.85 and p2 < 0.85:
         x = random.randint(x-180,  x)
         y = random.randint(y+10, y+80)
         tt.mouseClick(x, y, 'left')
         print('识别突破标志')
-        time.sleep(1)
 
       x, y, p = tt.locateImg(jingong)
       if p > 0.85:
@@ -132,13 +132,12 @@ if __name__ == '__main__':
         y = random.randint(y-15, y+15)
         tt.mouseClick(x, y, 'left')
         print('点击进攻')
-        time.sleep(1)
+        time.sleep(0.5) #必要的延迟
 
       x, y, p = tt.locateImg(wancheng)
-      if p > 0.85:
-        x, y, p = tt.locateImg(tupotu)
-        if  p < 0.85:
-              print('突破已完成，不愧是tt，真棒棒！')
-              time.sleep(1)
-              break
+      x2, y2, p2 = tt.locateImg(tupotu)
+      if p > 0.85 and p2 < 0.9:
+          print(p,p2)
+          print('突破已完成，不愧是tt，真棒棒！')
+          break
 

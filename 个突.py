@@ -59,7 +59,7 @@ if __name__ == '__main__':
   def mouse_click(x, y):
     tt.mouseClick(x, y, 'left')
     print(f'点击坐标 x={x}, y={y}')
-    time.sleep(1)
+    # time.sleep(1)
 
 
   # 定义检查图片函数
@@ -78,6 +78,7 @@ if __name__ == '__main__':
   # 定义失败次数
   failed = 0
   turefaile = 0
+  last_refresh_time= 0
 
   flag = False
 
@@ -107,7 +108,7 @@ if __name__ == '__main__':
       tt.mouseClick(x, y, 'left')
       print('结算2点击x=', x, 'y=', y)
       failed = failed + 1
-      time.sleep(1)
+      # time.sleep(1)
 
 
     # 悬赏
@@ -130,11 +131,6 @@ if __name__ == '__main__':
       x, y = generate_random_coordinates(1200, 30, (1144, 1256), 437, 100, (185, 689))
       mouse_click(x, y)
 
-    # x, y, p = tt.locateImg(buzu)
-    # if p > 0.99:
-    #   print('个突完毕')
-    #   break
-
 
 
     x, y, p = tt.locateImg(zhunbei)
@@ -150,14 +146,7 @@ if __name__ == '__main__':
       y = random.randint(y - 15, y + 15)
       mouse_click(x, y)
       print('点击进攻')
-      # 识别突破券不足
-      x, y, p = tt.locateImg(buzu2)
-      if p > 0.98:
-        print('突破券不足')
-        break
-      x, y, p = tt.locateImg(buzu)
-      if p > 0.80:
-        break
+
 
     x, y, p = tt.locateImg(buzu2)
     if p > 0.98:
@@ -165,16 +154,16 @@ if __name__ == '__main__':
       break
 
 
-    x, y, p = tt.locateImg(buzu)
-    if p > 0.80:
-      break
-
     x, y, p2 = tt.locateImg(queding)
     if p2 > 0.85:
       x = random.randint(x - 15, x + 15)
       y = random.randint(y - 5, y + 5)
       mouse_click(x, y)
       print('点击确定')
+      turefaile = 0
+      tupo_state = 0
+      failed = 0
+
 
     x, y, p3 = tt.locateImg(qiguai)
     x, y, p = tt.locateImg(tupoyemian)
@@ -182,9 +171,11 @@ if __name__ == '__main__':
        print('处于突破页面')
        # 第一个突破标志
        if tupo_state == 0:
+         last_refresh_time = time.time()
          turefaile = 0
          x, y, p = tt.locateImg(tupotu, region=(139, 139, 473, 273))
-         if p > 0.85:
+         x2, y2, p2 = tt.locateImg(jingong)
+         if p > 0.85 and p2 <0.85:
            x = random.randint(x - 180, x)
            y = random.randint(y + 10, y + 80)
            mouse_click(x, y)
@@ -192,21 +183,17 @@ if __name__ == '__main__':
          else:
            x, y, p = tt.locateImg(dabuguo, region=(139, 139, 473, 273))
            if p > 0.95:
-             # print('突破1开始failed =', failed)
-             # failed = failed + 1
              print('突破1后failed =', failed)
              tupo_state = 1
-             time.sleep(1)
            else:
-           # x, y, p = tt.locateImg(po, region=(139, 139, 473, 273))
-           # if p > 0.80:
              print('突破1成功,failed =',failed)
              tupo_state = 1
 
        # 第二个突破标志
        elif tupo_state == 1:
          x, y, p = tt.locateImg(tupotu, region=(473, 139, 804, 273))
-         if p > 0.85:
+         x2, y2, p2 = tt.locateImg(jingong)
+         if p > 0.85 and p2 < 0.85:
            print('识别突破2', x, y)
            x = random.randint(x - 180, x)
            y = random.randint(y + 10, y + 80)
@@ -215,21 +202,17 @@ if __name__ == '__main__':
          else:
            x, y, p = tt.locateImg(dabuguo, region=(473, 139, 804, 273))
            if p > 0.95:
-             # print('突破2开始failed =', failed)
-             # failed = failed + 1
              print('突破2后failed =', failed)
              tupo_state = 2
-             time.sleep(1)
            else:
-           # x, y, p = tt.locateImg(po, region=(473, 139, 804, 273))
-           # if p > 0.80:
              print('突破2成功,failed =',failed)
              tupo_state = 2
 
        # 第三个突破标志
        elif tupo_state == 2:
          x, y, p = tt.locateImg(tupotu, region=(807, 139, 1140, 273))
-         if p > 0.85:
+         x2, y2, p2 = tt.locateImg(jingong)
+         if p > 0.85 and p2 < 0.85:
            x = random.randint(x - 180, x)
            y = random.randint(y + 10, y + 80)
            mouse_click(x, y)
@@ -238,21 +221,18 @@ if __name__ == '__main__':
            x, y, p = tt.locateImg(dabuguo, region=(807, 139, 1140, 273))
            if p > 0.95:
              print('3',x,y,p)
-             # print('突破3开始failed =',failed)
-             # failed = failed + 1
              print('突破3失败,failed =',failed)
              tupo_state = 3
-             time.sleep(1)
+             # time.sleep(1)
            else:
-           # x, y, p = tt.locateImg(po, region=(807, 139, 1140, 273))
-           # if p > 0.80:
              print('突破3成功,failed =',failed)
              tupo_state = 3
 
        # 第四个突破标志
        elif tupo_state == 3:
          x, y, p = tt.locateImg(tupotu, region=(139, 279, 473, 404))
-         if p > 0.85:
+         x2, y2, p2 = tt.locateImg(jingong)
+         if p > 0.85 and p2 < 0.85:
            x = random.randint(x - 180, x)
            y = random.randint(y + 10, y + 80)
            mouse_click(x, y)
@@ -260,21 +240,17 @@ if __name__ == '__main__':
          else:
            x, y, p = tt.locateImg(dabuguo, region=(139, 279, 473, 404))
            if p > 0.95:
-             # print('突破4开始failed =', failed)
-             # failed = failed + 1
              print('突破4后failed =', failed)
              tupo_state = 4
-             time.sleep(1)
            else:
-           # x, y, p = tt.locateImg(po, region=(139, 279, 473, 404))
-           # if p > 0.80:
              print('突破4成功,failed =',failed)
              tupo_state = 4
 
        # 第五个突破标志
        elif tupo_state == 4:
          x, y, p = tt.locateImg(tupotu, region=(473, 279, 804, 404))
-         if p > 0.85:
+         x2, y2, p2 = tt.locateImg(jingong)
+         if p > 0.85 and p2 < 0.85:
            x = random.randint(x - 180, x)
            y = random.randint(y + 10, y + 80)
            mouse_click(x, y)
@@ -282,44 +258,37 @@ if __name__ == '__main__':
          else:
            x, y, p = tt.locateImg(dabuguo, region=(473, 279, 804, 404))
            if p > 0.95:
-             # print('突破5开始failed =', failed)
-             # failed = failed + 1
              print('突破5后failed =', failed)
              tupo_state = 5
-             time.sleep(1)
            else:
-           # x, y, p = tt.locateImg(po, region=(473, 279, 804, 404))
-           # if p > 0.80:
              print('突破5成功,failed =',failed)
              tupo_state = 5
 
        # 第六个突破标志
        elif tupo_state == 5:
          x, y, p = tt.locateImg(tupotu, region=(807, 279, 1140, 404))
-         if p > 0.85:
+         x2, y2, p2 = tt.locateImg(jingong)
+         if p > 0.85 and p2 < 0.85:
            x = random.randint(x - 180, x)
            y = random.randint(y + 10, y + 80)
            mouse_click(x, y)
            print('识别突破6标志')
          else:
            x, y, p = tt.locateImg(dabuguo, region=(807, 279, 1140, 404))
-           if p > 0.95:
+           x2, y2, p2 = tt.locateImg(jingong)
+           if p > 0.85 and p2 < 0.85:
              print('6失败', x, y, p)
-             # print('突破6开始failed =', failed)
-             # failed = failed + 1
              print('突破6失败,failed =',failed)
              tupo_state = 6
-             time.sleep(1)
            else:
-           # x, y, p = tt.locateImg(po, region=(807, 279, 1140, 404))
-           # if p > 0.80:
              print('突破6成功,failed =',failed)
              tupo_state = 6
 
        # 第七个突破标志
        elif tupo_state == 6:
          x, y, p = tt.locateImg(tupotu, region=(139, 412, 473, 543))
-         if p > 0.85:
+         x2, y2, p2 = tt.locateImg(jingong)
+         if p > 0.85 and p2 < 0.85:
            x = random.randint(x - 180, x)
            y = random.randint(y + 10, y + 80)
            mouse_click(x, y)
@@ -327,21 +296,17 @@ if __name__ == '__main__':
          else:
            x, y, p = tt.locateImg(dabuguo, region=(139, 412, 473, 543))
            if p > 0.95:
-             # print('突破7开始failed =', failed)
-             # failed = failed + 1
              print('突破7后failed =', failed)
              tupo_state = 7
-             time.sleep(1)
            else:
-           # x, y, p = tt.locateImg(po, region=(139, 412, 473, 543))
-           # if p > 0.80:
              print('突破7成功,failed =',failed)
              tupo_state = 7
 
        # 第8个突破标志
        elif tupo_state == 7:
          x, y, p = tt.locateImg(tupotu, region=(473, 412, 804, 543))
-         if p > 0.85:
+         x2, y2, p2 = tt.locateImg(jingong)
+         if p > 0.85 and p2 < 0.85:
            x = random.randint(x - 180, x)
            y = random.randint(y + 10, y + 80)
            mouse_click(x, y)
@@ -349,14 +314,9 @@ if __name__ == '__main__':
          else:
            x, y, p = tt.locateImg(dabuguo, region=(473, 412, 804, 543))
            if p > 0.95:
-             # print('突破8开始failed =', failed)
-             # failed = failed + 1
              print('突破8后failed =', failed)
              tupo_state = 8
-             time.sleep(1)
            else:
-           # x, y, p = tt.locateImg(po, region=(473, 412, 804, 543))
-           # if p > 0.80:
              print('突破8成功,failed =',failed)
              tupo_state = 8
 
@@ -367,7 +327,8 @@ if __name__ == '__main__':
          if failed <= 4:
            failedNum = 4 - failed
            x, y, p = tt.locateImg(tupotu, region=(807, 412, 1140, 543))
-           if p > 0.85:
+           x2, y2, p2 = tt.locateImg(jingong)
+           if p > 0.85 and p2 < 0.85:
              x = random.randint(x - 180, x)
              y = random.randint(y + 10, y + 80)
              mouse_click(x, y)
@@ -396,10 +357,23 @@ if __name__ == '__main__':
                  print('结算2点击x=', x, 'y=', y)
                  failed = failed + 1
                  print(failed)
-                 time.sleep(1)
+
+               if failed >= 4:
+                 x, y, p = tt.locateImg(dabuguo, region=(807, 412, 1140, 543))
+                 x2, y2, p2 = tt.locateImg(jingong)
+                 if p > 0.85 and p2 < 0.85:
+                   x = random.randint(x - 180, x)
+                   y = random.randint(y + 10, y + 80)
+                   mouse_click(x, y)
+                   print('识别突破9标志，打了一次')
+                   turefaile = 1  # 打过一次9了
+                   tupo_state = 9
+                   break
+
 
                x, y, p = tt.locateImg(dabuguo, region=(807, 412, 1140, 543))
-               if p > 0.95:
+               x2, y2, p2 = tt.locateImg(jingong)
+               if p > 0.85 and p2 < 0.85:
                  print('突破9失败')
                  x = random.randint(x - 180, x)
                  y = random.randint(y + 10, y + 80)
@@ -411,12 +385,6 @@ if __name__ == '__main__':
                  y = random.randint(y - 15, y + 15)
                  mouse_click(x, y)
                  print('点击进攻')
-                 # 识别突破券不足
-                 x, y, p = tt.locateImg(buzu)
-                 if p > 0.80:
-                   break
-
-
 
                x, y, p = tt.locateImg(fanhui)
                if p > 0.85:
@@ -429,90 +397,83 @@ if __name__ == '__main__':
                  x = random.randint(x - 15, x + 15)
                  y = random.randint(y - 5, y + 5)
                  mouse_click(x, y)
-                 time.sleep(1.5)
+                 # time.sleep(1.5)
 
-               if failed >= 4:
-                 break
 
          else:
            print('没到9就失败那么多次')
-           turefaile == 0
+
+           x, y, p = tt.locateImg(dabuguo, region=(807, 412, 1140, 543))
+           x2, y2, p2 = tt.locateImg(jingong)
+           if p > 0.95 and p2 < 0.85:
+             print('已经失败了')
+             x, y, p = tt.locateImg(shuaxin)
+             if p > 0.9:
+               x = random.randint(x - 15, x + 15)
+               y = random.randint(y - 5, y + 5)
+               mouse_click(x, y)
+
            x, y, p = tt.locateImg(tupotu, region=(807, 412, 1140, 543))
-           if p > 0.85:
+           x2, y2, p2 = tt.locateImg(jingong)
+           if p > 0.85 and p2 < 0.85:
              x = random.randint(x - 180, x)
              y = random.randint(y + 10, y + 80)
              mouse_click(x, y)
-             print('识别突破9标志')
+             print('识别突破9标志，打了一次')
+             turefaile = 1  # 打过一次9了
+             tupo_state = 9
            pass
 
-       #最后一次突破9
-       x, y, p = tt.locateImg(dabuguo, region=(807, 412, 1140, 543))
-       if p > 0.95 and turefaile == 0:
-         print('突破9且从来没真打过')
-         x = random.randint(x - 180, x)
-         y = random.randint(y + 10, y + 80)
-         mouse_click(x, y)
-         turefaile = 1
-         failed = 0
-       time.sleep(1)
+       elif tupo_state == 9:
 
-
-       x, y, p = tt.locateImg(jingong)
-       if p > 0.85:
-         time.sleep(1)
-         x = random.randint(x - 30, x + 30)
-         y = random.randint(y - 15, y + 15)
-         mouse_click(x, y)
-         print('点击进攻')
-         # 识别突破券不足
-         x, y, p = tt.locateImg(buzu)
-         if p > 0.80:
-           break
-
-       x, y, p = tt.locateImg(dabuguo, region=(807, 412, 1140, 543))
-       if p > 0.95 and turefaile == 1:
-         print('真失败了')
-         tupo_state = 0
-         failed = 0
-         x, y, p = tt.locateImg(shuaxin)
-         if p > 0.85:
-           x = random.randint(x - 15, x + 15)
-           y = random.randint(y - 5, y + 5)
-           # time.sleep(200)
-           mouse_click(x, y)
-           turefaile = 0
-
-       # x, y, p = tt.locateImg(dabuguo, region=(807, 412, 1140, 543))
-       # if p < 0.95 and turefaile == 1:
-       #   print('打了突破9，进行新一轮')
-       #   tupo_state = 0
-       #   failed = 0
-       #   turefaile = 0
-
-
-       x, y, p = tt.locateImg(po, region=(807, 412, 1140, 543))
-       if p > 0.80:
-         print('突破9成功')
-         x, y, p = tt.locateImg(shuaxin)
-         if p > 0.80:
-           x = random.randint(x - 15, x + 15)
-           y = random.randint(y - 5, y + 5)
-           # time.sleep(200)
-           mouse_click(x, y)
+         x, y, p = tt.locateImg(tupotu, region=(139, 139, 473, 273))
+         x2, y2, p2 = tt.locateImg(jingong)
+         if p > 0.85 and p2 < 0.85:
            tupo_state = 0
            failed = 0
            turefaile = 0
-         else:
-           print('找不到刷新')
+           print('最后一次已经打过')
 
-       # x, y, p = tt.locateImg(shuaxin)
-       # if p > 0.85 and turefaile == 1:
-       #   x = random.randint(x - 15, x + 15)
-       #   y = random.randint(y - 5, y + 5)
-       #   # time.sleep(200)
-       #   mouse_click(x, y)
-       #   turefaile = 0
 
+         x, y, p2 = tt.locateImg(queding)
+         if p2 > 0.85:
+           x = random.randint(x - 15, x + 15)
+           y = random.randint(y - 5, y + 5)
+           mouse_click(x, y)
+           print('点击确定')
+           turefaile = 0
+           tupo_state = 0
+           failed = 0
+
+
+         x, y, p = tt.locateImg(dabuguo, region=(807, 412, 1140, 543))
+         x2, y2, p2 = tt.locateImg(jingong)
+         if p > 0.95 and turefaile == 1 and p2 < 0.85:
+           print('真失败了')
+           current_time = time.time()
+           print(current_time - last_refresh_time)
+           if current_time - last_refresh_time >= 300:
+               x, y, p = tt.locateImg(shuaxin)
+               if p > 0.9:
+                 # time.sleep(240)
+                 x = random.randint(x - 15, x + 15)
+                 y = random.randint(y - 5, y + 5)
+                 mouse_click(x, y)
+
+         x, y, p = tt.locateImg(po, region=(807, 412, 1140, 543))
+         x2, y2, p2 = tt.locateImg(jingong)
+         if p > 0.80 and p2 <0.85:
+           print('突破9成功')
+           current_time = time.time()
+           print(current_time - last_refresh_time)
+           if current_time - last_refresh_time >= 300:
+               x, y, p = tt.locateImg(shuaxin)
+               if p > 0.80:
+                 x = random.randint(x - 15, x + 15)
+                 y = random.randint(y - 5, y + 5)
+                 mouse_click(x, y)
+               else:
+                 print('找不到刷新')
 
 
 

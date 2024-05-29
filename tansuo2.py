@@ -264,7 +264,7 @@ if __name__ == '__main__':
                 else:
                     pass
 
-                x, y, p = tt.locateImg(k17, region=(1000,120,1270,700))
+                x, y, p = tt.locateImg(k28, region=(1000,120,1270,700))
                 print('判断K2')
                 if p > 0.80:
                     x = random.randint(x - 53, x + 88)

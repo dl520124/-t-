@@ -23,6 +23,7 @@ if __name__ == '__main__':
     time.sleep(1)
 
   while True:
+      time.sleep(0.5)
       x, y, p = tt.locateImg(zhunbei)
       if p > 0.85:
           x = random.randint(x - 30, x + 30)
