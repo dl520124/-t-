@@ -129,6 +129,10 @@ if __name__ == '__main__':
 
     flag = False
 
+
+    #打多少次小怪转突破
+    fitguainum = 72
+
     while True:
       if tansuo_state == 0: #探索状态
         # time.sleep(1)
@@ -166,7 +170,8 @@ if __name__ == '__main__':
                         print('有内宝箱')
                         # time.sleep(1)
                         x, y, p = tt.locateImg(queren, None)
-                        if p < 0.85:
+                        time.sleep(0.5)
+                        if p < 0.85 :
                             x = random.randint(40, 75)
                             y = random.randint(40, 75)
                             tt.mouseClick(x, y)
@@ -248,7 +253,7 @@ if __name__ == '__main__':
                                         tt.mouseClick(x, y)
                                         print('点击确认')
 
-                            else:
+                            if p > 0.85:
                                 print('识别未知1')
                                 x = random.randint(40, 75)
                                 y = random.randint(40, 75)
@@ -261,6 +266,13 @@ if __name__ == '__main__':
                 print('找到boss,点击了:', x, y)
                 bossStop = 1;
 
+            x, y, p = tt.locateImg(queren, None)
+            if p > 0.85:
+                x = random.randint(718, 835)
+                y = random.randint(390, 420)
+                tt.mouseClick(x, y)
+                print('点击确认')
+
             x, y, p = tt.locateImg(tili)
             if p > 0.85:
                 print('体力不足')
@@ -268,7 +280,8 @@ if __name__ == '__main__':
 
 
         else:
-            print('找不到樱饼')
+            # print('找不到樱饼')
+            pass
 
 
 
@@ -312,7 +325,7 @@ if __name__ == '__main__':
         if p > 0.85:
             bossStop = 0; #初始化boss滑动
             # time.sleep(1)
-            print('已经点击', baonum, '次宝箱')
+            print('已经点击',baonum,'次宝箱')
             print('不是探索页面')
             x, y, p = tt.locateImg(waibaoxiang2, None)
             if p > 0.85:
@@ -325,12 +338,12 @@ if __name__ == '__main__':
                     x, y, p = tt.locateImg(waibaoxiang2, None)
                     if p > 0.85:
                         tt.mouseClick(x, y)
-                        baonum = baonum+1;
+                        baonum = baonum + 1
                         print('已经点击',baonum,'次宝箱')
             else:
                 print('没有宝箱')
-                if number >=100:
-                    print('打够120次小怪了')
+                if number >=fitguainum:
+                    print('打够',number,'次小怪了')
                     x, y, p = tt.locateImg(tuichu)
                     print(p, '退出')
                     if p > 0.85:
@@ -347,7 +360,7 @@ if __name__ == '__main__':
                         tansuo_state = 1  # 进入突破状态
                 x, y, p = tt.locateImg(tansuo, region=(863, 500, 1020, 576))
                 print("判断探索")
-                if p > 0.85 and number<100 and tansuo_state == 0:
+                if p > 0.85 and number<fitguainum and tansuo_state == 0:
                     x = random.randint(900, 986)
                     y = random.randint(523, 553)
                     tt.mouseClick(x, y)
@@ -356,7 +369,7 @@ if __name__ == '__main__':
 
                 x, y, p = tt.locateImg(k28, region=(1000,120,1270,700))
                 print('判断K28，已打小怪次数',number)
-                if p > 0.80 and number<100 and tansuo_state == 0:
+                if p > 0.80 and number<fitguainum and tansuo_state == 0:
                     x = random.randint(x - 53, x + 88)
                     y = random.randint(y, y + 79)
                     tt.mouseClick(x, y)
@@ -366,7 +379,7 @@ if __name__ == '__main__':
                     pass
         x, y, p = tt.locateImg(weizhi1, None)
         if p > 0.85:
-            print('识别未知1')
+            print('外识别未知1')
             x = random.randint(40, 75)
             y = random.randint(40, 75)
             tt.mouseClick(x, y)
