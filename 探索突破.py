@@ -70,6 +70,11 @@ if __name__ == '__main__':
     buzu2 = './jiesuan/buzu2.png'
     diantupo = './jiesuan/diantupo.png'
 
+    # 卡主
+    kazhu = './tansuo/kazhu.png'
+    tingyuan = './tansuo/tingyuan.png'
+
+
 
     #未完成，还是要识别字，不然容易错误
 
@@ -83,6 +88,12 @@ if __name__ == '__main__':
     sainum = 0;
     bossStop = 0;
     tansuo_state = 0
+
+    # 时间
+    xunhuan_time = 0
+    jiesuan_time = 0
+    dianxiannum = 0
+
 
     #突破用的
     def generate_random_coordinates(mu_x, sigma_x, range_x, mu_y, sigma_y, range_y):
@@ -129,8 +140,16 @@ if __name__ == '__main__':
 
     flag = False
 
+
+    #打多少次小怪转突破
+    fitguainum = 30
+
     while True:
+
       if tansuo_state == 0: #探索状态
+
+        # 定义循环的时间戳
+        xunhuan_time = time.time()
         # time.sleep(1)
         # 悬赏
         x, y, p = tt.locateImg(xuanshang)
@@ -166,7 +185,8 @@ if __name__ == '__main__':
                         print('有内宝箱')
                         # time.sleep(1)
                         x, y, p = tt.locateImg(queren, None)
-                        if p < 0.85:
+                        time.sleep(0.5)
+                        if p < 0.85 :
                             x = random.randint(40, 75)
                             y = random.randint(40, 75)
                             tt.mouseClick(x, y)
@@ -248,7 +268,7 @@ if __name__ == '__main__':
                                         tt.mouseClick(x, y)
                                         print('点击确认')
 
-                            else:
+                            if p > 0.85:
                                 print('识别未知1')
                                 x = random.randint(40, 75)
                                 y = random.randint(40, 75)
@@ -261,6 +281,13 @@ if __name__ == '__main__':
                 print('找到boss,点击了:', x, y)
                 bossStop = 1;
 
+            x, y, p = tt.locateImg(queren, None)
+            if p > 0.85:
+                x = random.randint(718, 835)
+                y = random.randint(390, 420)
+                tt.mouseClick(x, y)
+                print('点击确认')
+
             x, y, p = tt.locateImg(tili)
             if p > 0.85:
                 print('体力不足')
@@ -268,7 +295,8 @@ if __name__ == '__main__':
 
 
         else:
-            print('找不到樱饼')
+            # print('找不到樱饼')
+            pass
 
 
 
@@ -289,6 +317,7 @@ if __name__ == '__main__':
             print('结算1点击x=', x, 'y=', y)
             # time.sleep(1)
             number = number + 1;
+            jiesuan_time = time.time()
             print('number=', number);
 
         x, y, p = tt.locateImg(jiesuan2)
@@ -312,7 +341,7 @@ if __name__ == '__main__':
         if p > 0.85:
             bossStop = 0; #初始化boss滑动
             # time.sleep(1)
-            print('已经点击', baonum, '次宝箱')
+            print('已经点击',baonum,'次宝箱')
             print('不是探索页面')
             x, y, p = tt.locateImg(waibaoxiang2, None)
             if p > 0.85:
@@ -325,12 +354,12 @@ if __name__ == '__main__':
                     x, y, p = tt.locateImg(waibaoxiang2, None)
                     if p > 0.85:
                         tt.mouseClick(x, y)
-                        baonum = baonum+1;
+                        baonum = baonum + 1
                         print('已经点击',baonum,'次宝箱')
             else:
                 print('没有宝箱')
-                if number >=100:
-                    print('打够120次小怪了')
+                if number >=fitguainum:
+                    print('打够',number,'次小怪了')
                     x, y, p = tt.locateImg(tuichu)
                     print(p, '退出')
                     if p > 0.85:
@@ -347,35 +376,39 @@ if __name__ == '__main__':
                         tansuo_state = 1  # 进入突破状态
                 x, y, p = tt.locateImg(tansuo, region=(863, 500, 1020, 576))
                 print("判断探索")
-                if p > 0.85 and number<100 and tansuo_state == 0:
+                if p > 0.85 and number<fitguainum and tansuo_state == 0:
                     x = random.randint(900, 986)
                     y = random.randint(523, 553)
                     tt.mouseClick(x, y)
-                else:
-                    pass
-
+                    print('下一步')
                 x, y, p = tt.locateImg(k28, region=(1000,120,1270,700))
                 print('判断K28，已打小怪次数',number)
-                if p > 0.80 and number<100 and tansuo_state == 0:
+                if p > 0.80 and number<fitguainum and tansuo_state == 0:
                     x = random.randint(x - 53, x + 88)
                     y = random.randint(y, y + 79)
                     tt.mouseClick(x, y)
                     bossStop = 0;
-                else:
-                    #print('找不到k2')
-                    pass
+                    print('下二步')
+                print('没有宝箱结束')
         x, y, p = tt.locateImg(weizhi1, None)
         if p > 0.85:
-            print('识别未知1')
+            print('外识别未知1')
             x = random.randint(40, 75)
             y = random.randint(40, 75)
             tt.mouseClick(x, y)
             print('点击返回')
 
-        x, y, p = tt.locateImg(ji57)
-        if p > 0.95:
-            print("已经57级")
-            break
+        # x, y, p = tt.locateImg(ji57)
+        # if p > 0.95:
+        #     print("已经57级")
+        #     break
+
+
+        if xunhuan_time - jiesuan_time >= 300 and jiesuan_time !=0:
+           print('探索跳转到掉线')
+           print("xunhuan_time:",xunhuan_time,",jiesuan_time:",jiesuan_time)
+           tansuo_state = 2
+
 
 
 
@@ -450,6 +483,8 @@ if __name__ == '__main__':
               x, y, p = tt.locateImg(tuichu)
               if p > 0.85:
                   tt.mouseClick(x, y)
+                  jiesuan_time = 0
+                  xunhuan_time = 0
                   tansuo_state = 0
 
           x, y, p2 = tt.locateImg(queding)
@@ -791,4 +826,75 @@ if __name__ == '__main__':
                           else:
                               print('找不到刷新')
 
+      if tansuo_state == 2:
+          print('掉线状态')
+          dianxiannum = dianxiannum + 1
 
+          x, y, p = tt.locateImg(yao, region=(400, 4, 467, 73))
+          if p > 0.85:
+              print('已在探索页面')
+              xunhuan_time = 0
+              jiesuan_time = 0
+              tansuo_state = 0
+
+          x, y, p = tt.locateImg(tansuo, region=(863, 500, 1020, 576))
+          if p > 0.85:
+              xunhuan_time = 0
+              jiesuan_time = 0
+              tansuo_state = 0
+
+          x, y, p = tt.locateImg(tingyuan)
+          if p > 0.95:
+              tt.mouseClick(x, y)
+
+          x, y, p = tt.locateImg(kazhu)
+          if p > 0.95:
+              # 创建一个键盘模拟器对象
+              tt.keyPress(win32con.VK_ESCAPE)
+              time.sleep(1)
+              x, y, p = tt.locateImg(queren, None)
+              if p > 0.85:
+                  tt.mouseClick(x, y)
+                  print('点击确认')
+                  time.sleep(4)
+
+                  x, y, p = tt.locateImg(jiesuan1)
+                  if p > 0.80:
+                      # 生成符合指定范围的正态分布的 x 和 y 坐标
+                      mu, sigma = 1200, 30  # 均值和标准差
+                      x = np.random.normal(mu, sigma)
+                      while x < 1144 or x > 1256:
+                          x = np.random.normal(mu, sigma)
+
+                      mu, sigma = 437, 100  # 均值和标准差
+                      y = np.random.normal(mu, sigma)
+                      while y < 185 or y > 689:
+                          y = np.random.normal(mu, sigma)
+                      tt.mouseClick(x, y, 'left')
+                      print('掉线点击x=', x, 'y=', y)
+                  time.sleep(2)
+                  tt.keyPress(win32con.VK_ESCAPE)
+                  time.sleep(1)
+                  x, y, p = tt.locateImg(queren, None)
+                  if p > 0.85:
+                      tt.mouseClick(x, y)
+                      print('点击确认')
+                      time.sleep(4)
+                      x, y, p = tt.locateImg(jiesuan1)
+                      if p > 0.80:
+                          # 生成符合指定范围的正态分布的 x 和 y 坐标
+                          mu, sigma = 1200, 30  # 均值和标准差
+                          x = np.random.normal(mu, sigma)
+                          while x < 1144 or x > 1256:
+                              x = np.random.normal(mu, sigma)
+
+                          mu, sigma = 437, 100  # 均值和标准差
+                          y = np.random.normal(mu, sigma)
+                          while y < 185 or y > 689:
+                              y = np.random.normal(mu, sigma)
+                          tt.mouseClick(x, y, 'left')
+                          print('掉线点击x=', x, 'y=', y)
+                      time.sleep(2)
+                      jiesuan_time = 0
+                      xunhuan_time = 0
+                      tansuo_state = 0
