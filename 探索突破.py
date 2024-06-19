@@ -142,7 +142,7 @@ if __name__ == '__main__':
 
 
     #打多少次小怪转突破
-    fitguainum = 30
+    fitguainum = 120
 
     while True:
 
@@ -384,6 +384,7 @@ if __name__ == '__main__':
                 x, y, p = tt.locateImg(k28, region=(1000,120,1270,700))
                 print('判断K28，已打小怪次数',number)
                 if p > 0.80 and number<fitguainum and tansuo_state == 0:
+                    print('没到这一步吗')
                     x = random.randint(x - 53, x + 88)
                     y = random.randint(y, y + 79)
                     tt.mouseClick(x, y)
@@ -671,6 +672,12 @@ if __name__ == '__main__':
                           mouse_click(x, y)
                           print('识别突破9标志,还需要失败', failedNum)
                       while True:
+                          x, y, p = tt.locateImg(tupotu, region=(807, 412, 1140, 543))
+                          x2, y2, p2 = tt.locateImg(jingong)
+                          if p > 0.85 and p2 < 0.85:
+                              x = random.randint(x - 180, x)
+                              y = random.randint(y + 10, y + 80)
+                              mouse_click(x, y)
 
                           x, y = check_image(settlement_images)
                           if x is not None and y is not None:

@@ -9,10 +9,33 @@ import cv2
 import win32ui
 
 
+#自己加
+import logging
+import time
+import ctypes
+from ctypes import wintypes
+
+
 class LiuXingIT2(object):
+    # 自己加的
+    # 定义一些需要的常量
+    WM_LBUTTONDOWN = 0x0201
+    WM_LBUTTONUP = 0x0202
+    MK_LBUTTON = 0x0001
+    WM_RBUTTONDOWN = 0x0204
+    WM_RBUTTONUP = 0x0205
+    MK_RBUTTON = 0x0002
+    WM_MBUTTONDOWN = 0x0207
+    WM_MBUTTONUP = 0x0208
+    MK_MBUTTON = 0x0010
+    user32 = ctypes.WinDLL('user32', use_last_error=True)
 
     def __init__(self, h):
         self.h = h
+
+        # 自己家的
+    def MAKELONG(self, low, high):
+        return (high << 16) | (low & 0xFFFF)
 
 
 
@@ -26,16 +49,41 @@ class LiuXingIT2(object):
     def mouseClick(self, x,y,botton='left'):
         x = int(x)
         y = int(y)
-        position = win32api.MAKELONG(x, y)
+        position = self.MAKELONG(x, y)
+        # print(f"Attempting to click at {x}, {y} with button {botton}")
+
         if botton == 'left':
-            win32api.PostMessage(self.h, win32con.WM_LBUTTONDOWN, win32con.MK_LBUTTON, position)
-            win32api.PostMessage(self.h, win32con.WM_LBUTTONUP, None, position)
-        elif botton == 'right':
-            win32api.PostMessage(self.h, win32con.WM_RBUTTONDOWN, win32con.MK_RBUTTON, position)
-            win32api.PostMessage(self.h, win32con.WM_RBUTTONUP, None, position)
-        elif botton == 'middle':
-            win32api.PostMessage(self.h, win32con.WM_MBUTTONDOWN, win32con.MK_MBUTTON, position)
-            win32api.PostMessage(self.h, win32con.WM_MBUTTONUP, None, position)
+            success_down = self.user32.PostMessageW(self.h, self.WM_LBUTTONDOWN, self.MK_LBUTTON, position)
+            # print(f"WM_LBUTTONDOWN success: {bool(success_down)}, at position {position}")
+            if success_down:
+                time.sleep(0.05)
+                success_up = self.user32.PostMessageW(self.h, self.WM_LBUTTONUP, 0, position)
+                # print(f"WM_LBUTTONUP success: {bool(success_up)}, at position {position}")
+            elif botton == 'right':
+                success_down = self.user32.PostMessageW(self.h, self.WM_RBUTTONDOWN, self.MK_RBUTTON, position)
+                # print(f"WM_RBUTTONDOWN success: {bool(success_down)}, at position {position}")
+                if success_down:
+                    time.sleep(0.05)
+                    success_up = self.user32.PostMessageW(self.h, self.WM_RBUTTONUP, 0, position)
+                    # print(f"WM_RBUTTONUP success: {bool(success_up)}, at position {position}")
+            elif botton == 'middle':
+                success_down = self.user32.PostMessageW(self.h, self.WM_MBUTTONDOWN, self.MK_MBUTTON, position)
+                # print(f"WM_MBUTTONDOWN success: {bool(success_down)}, at position {position}")
+                if success_down:
+                    time.sleep(0.05)
+                    success_up = self.user32.PostMessageW(self.h, self.WM_MBUTTONUP, 0, position)
+                    # print(f"WM_MBUTTONUP success: {bool(success_up)}, at position {position}")
+
+        # position = win32api.MAKELONG(x, y)
+        # if botton == 'left':
+        #     win32api.PostMessage(self.h, win32con.WM_LBUTTONDOWN, win32con.MK_LBUTTON, position)
+        #     win32api.PostMessage(self.h, win32con.WM_LBUTTONUP, None, position)
+        # elif botton == 'right':
+        #     win32api.PostMessage(self.h, win32con.WM_RBUTTONDOWN, win32con.MK_RBUTTON, position)
+        #     win32api.PostMessage(self.h, win32con.WM_RBUTTONUP, None, position)
+        # elif botton == 'middle':
+        #     win32api.PostMessage(self.h, win32con.WM_MBUTTONDOWN, win32con.MK_MBUTTON, position)
+        #     win32api.PostMessage(self.h, win32con.WM_MBUTTONUP, None, position)
 
     def mouseDown(self,  x, y,botton='left'):
         x = int(x)
@@ -103,7 +151,11 @@ class LiuXingIT2(object):
                 mdc.SelectObject(bm)
                 mdc.BitBlt((0, 0), (w, h), dc, (region[0], region[1]), win32con.SRCCOPY)
 
-                # ---------------------------中间是自己修改的
+            # 检查是否成功创建了位图
+            if bm.GetHandle() == 0:
+                print("Error: Failed to create bitmap")
+                return
+
             filename = '3.bmp'
             while os.path.exists(filename):
                 try:
@@ -113,10 +165,6 @@ class LiuXingIT2(object):
                     continue
                 break
             bm.SaveBitmapFile(mdc, filename)  # 保存新文件
-            # ---------------------------自己修改的
-
-
-            #bm.SaveBitmapFile(mdc, '2.bmp')
             win32gui.DeleteObject(bm.GetHandle())
             mdc.DeleteDC()
             dc.DeleteDC()
@@ -172,10 +220,11 @@ class LiuXingIT2(object):
     def locateAllImg(self, src, region=None):
         res = []
         self.shot(region)
-        img=cv2.imread('2.bmp')
+        img=cv2.imread('3.bmp')
         template = cv2.imread(src)
-        result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
-        yloc, xloc = numpy.where(result >= 0.98)
+        # result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
+        result = cv2.matchTemplate(img, template, cv2.TM_SQDIFF_NORMED)
+        yloc, xloc = numpy.where(result <= 0.002)#原本是0.98
         for x, y in zip(xloc, yloc):
             if region != None:
                 res.append((x + region[0], y + region[1]))
@@ -211,7 +260,7 @@ class LiuXingIT2(object):
 
     def getPixel(self, x, y):
         self.shot()
-        img=cv2.imread('2.bmp')
+        img=cv2.imread('3.bmp')
         return img[y, x][::-1]
 
 

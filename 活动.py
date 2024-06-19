@@ -162,8 +162,8 @@ if __name__ == '__main__':
 
 
 
-      if num>=30:
-         print('已经打了300局，结束爬塔！')
+      if num>=106:
+         print('已经打了',num,'局，结束爬塔！')
          break;
 
       if xunerr>=400:

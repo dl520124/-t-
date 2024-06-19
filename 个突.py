@@ -340,6 +340,12 @@ if __name__ == '__main__':
              mouse_click(x, y)
              print('识别突破9标志,还需要失败', failedNum)
            while True:
+               x, y, p = tt.locateImg(tupotu, region=(807, 412, 1140, 543))
+               x2, y2, p2 = tt.locateImg(jingong)
+               if p > 0.85 and p2 < 0.85:
+                 x = random.randint(x - 180, x)
+                 y = random.randint(y + 10, y + 80)
+                 mouse_click(x, y)
 
                x, y = check_image(settlement_images)
                if x is not None and y is not None:

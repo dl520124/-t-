@@ -9,12 +9,39 @@ import cv2
 import win32ui
 
 
+#自己加
+import logging
+import time
+import ctypes
+from ctypes import wintypes
+
+
 class LiuXingIT(object):
+
+
+    #自己加的
+    # 定义一些需要的常量
+    WM_LBUTTONDOWN = 0x0201
+    WM_LBUTTONUP = 0x0202
+    MK_LBUTTON = 0x0001
+    WM_RBUTTONDOWN = 0x0204
+    WM_RBUTTONUP = 0x0205
+    MK_RBUTTON = 0x0002
+    WM_MBUTTONDOWN = 0x0207
+    WM_MBUTTONUP = 0x0208
+    MK_MBUTTON = 0x0010
+    user32 = ctypes.WinDLL('user32', use_last_error=True)
+
+
+
+
 
     def __init__(self, h):
         self.h = h
 
-
+    #自己家的
+    def MAKELONG(self, low, high):
+        return (high << 16) | (low & 0xFFFF)
 
     def mouseDoubleClick(self,x,y):
         x = int(x)
@@ -26,16 +53,45 @@ class LiuXingIT(object):
     def mouseClick(self, x,y,botton='left'):
         x = int(x)
         y = int(y)
-        position = win32api.MAKELONG(x, y)
+        print(x,y)
+        # position = win32api.MAKELONG(x, y)
+        # if botton == 'left':
+        #     win32api.PostMessage(self.h, win32con.WM_LBUTTONDOWN, win32con.MK_LBUTTON, position)
+        #     win32api.PostMessage(self.h, win32con.WM_LBUTTONUP, None, position)
+
+        position = self.MAKELONG(x, y)
+        # print(f"Attempting to click at {x}, {y} with button {botton}")
+
         if botton == 'left':
-            win32api.PostMessage(self.h, win32con.WM_LBUTTONDOWN, win32con.MK_LBUTTON, position)
-            win32api.PostMessage(self.h, win32con.WM_LBUTTONUP, None, position)
-        elif botton == 'right':
-            win32api.PostMessage(self.h, win32con.WM_RBUTTONDOWN, win32con.MK_RBUTTON, position)
-            win32api.PostMessage(self.h, win32con.WM_RBUTTONUP, None, position)
-        elif botton == 'middle':
-            win32api.PostMessage(self.h, win32con.WM_MBUTTONDOWN, win32con.MK_MBUTTON, position)
-            win32api.PostMessage(self.h, win32con.WM_MBUTTONUP, None, position)
+            success_down = self.user32.PostMessageW(self.h, self.WM_LBUTTONDOWN, self.MK_LBUTTON, position)
+            # print(f"WM_LBUTTONDOWN success: {bool(success_down)}, at position {position}")
+            if success_down:
+                time.sleep(0.05)
+                success_up = self.user32.PostMessageW(self.h, self.WM_LBUTTONUP, 0, position)
+                # print(f"WM_LBUTTONUP success: {bool(success_up)}, at position {position}")
+            elif botton == 'right':
+                success_down = self.user32.PostMessageW(self.h, self.WM_RBUTTONDOWN, self.MK_RBUTTON, position)
+                # print(f"WM_RBUTTONDOWN success: {bool(success_down)}, at position {position}")
+                if success_down:
+                    time.sleep(0.05)
+                    success_up = self.user32.PostMessageW(self.h, self.WM_RBUTTONUP, 0, position)
+                    # print(f"WM_RBUTTONUP success: {bool(success_up)}, at position {position}")
+            elif botton == 'middle':
+                success_down = self.user32.PostMessageW(self.h, self.WM_MBUTTONDOWN, self.MK_MBUTTON, position)
+                # print(f"WM_MBUTTONDOWN success: {bool(success_down)}, at position {position}")
+                if success_down:
+                    time.sleep(0.05)
+                    success_up = self.user32.PostMessageW(self.h, self.WM_MBUTTONUP, 0, position)
+                    # print(f"WM_MBUTTONUP success: {bool(success_up)}, at position {position}")
+
+
+
+        # elif botton == 'right':
+        #     win32api.PostMessage(self.h, win32con.WM_RBUTTONDOWN, win32con.MK_RBUTTON, position)
+        #     win32api.PostMessage(self.h, win32con.WM_RBUTTONUP, None, position)
+        # elif botton == 'middle':
+        #     win32api.PostMessage(self.h, win32con.WM_MBUTTONDOWN, win32con.MK_MBUTTON, position)
+        #     win32api.PostMessage(self.h, win32con.WM_MBUTTONUP, None, position)
 
     def mouseDown(self,  x, y,botton='left'):
         x = int(x)
