@@ -368,12 +368,18 @@ if __name__ == '__main__':
                         x, y, p = tt.locateImg(diantupo)
                         if p > 0.85:
                             tt.mouseClick(x, y)
-                            tansuo_state = 1  # 进入突破状态
+                            x, y, p = tt.locateImg(tupoyemian)
+                            if p > 0.85:
+                               tansuo_state = 1  # 进入突破状态
+                               print('进入突破状态1')
                     x, y, p = tt.locateImg(diantupo)
                     if p > 0.85:
                         tt.mouseClick(x, y)
                         number = 0
-                        tansuo_state = 1  # 进入突破状态
+                        x, y, p = tt.locateImg(tupoyemian)
+                        if p > 0.85:
+                            tansuo_state = 1  # 进入突破状态
+                            print('进入突破状态2')
                 x, y, p = tt.locateImg(tansuo, region=(863, 500, 1020, 576))
                 print("判断探索")
                 if p > 0.85 and number<fitguainum and tansuo_state == 0:
@@ -398,6 +404,11 @@ if __name__ == '__main__':
             y = random.randint(40, 75)
             tt.mouseClick(x, y)
             print('点击返回')
+
+        x, y, p = tt.locateImg(tupoyemian)
+        if p > 0.85:
+            tansuo_state = 1  # 进入突破状态
+            print('进入突破状态3')
 
         # x, y, p = tt.locateImg(ji57)
         # if p > 0.95:
@@ -487,6 +498,7 @@ if __name__ == '__main__':
                   jiesuan_time = 0
                   xunhuan_time = 0
                   tansuo_state = 0
+                  print('进入探索页面')
 
           x, y, p2 = tt.locateImg(queding)
           if p2 > 0.85:
