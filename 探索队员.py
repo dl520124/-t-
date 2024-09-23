@@ -33,6 +33,7 @@ if __name__ == '__main__':
     k10 = './tansuo/k10.png'
     k17 = './tansuo/k17.png'
     tansuo = './tansuo/tansuo.png'
+    likai = './tansuo/likai.png'
 
     yingbing = './tansuo/yingbing.png'
 
@@ -51,9 +52,10 @@ if __name__ == '__main__':
 
     queding = './jiesuan/queding.png'
     buzu3 = './jiesuan/buzu3.png'
+    tuichuk28 = './jiesuan/tuichuk28.png'
 
 
-    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
+    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-1')
     print(handle)
     h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
     print(h)
@@ -114,8 +116,9 @@ if __name__ == '__main__':
             print('结算2点击x=', x, 'y=', y)
             # time.sleep(1)
 
+        x3, y3, p3 = tt.locateImg(tuichuk28)
         x, y, p2 = tt.locateImg(queding)
-        if p2 > 0.85:
+        if p2 > 0.85 and p3 > 0.85:
             x = random.randint(x - 15, x + 15)
             y = random.randint(y - 5, y + 5)
             tt.mouseClick(x, y)
@@ -143,17 +146,35 @@ if __name__ == '__main__':
             print('点击确认')
 
 
-        x, y, p = tt.locateImg(buzu3)
-        print(p)
-        if p > 0.94:
-            print('突破券满了')
-            break
-        else:
-            x, y, p = tt.locateImg(jieshou)
-            if p > 0.95:
-                tt.mouseClick(x, y, 'left')
-                print('接受组队')
-        if number>=100:
+        # x, y, p = tt.locateImg(buzu3)
+        # print(p)
+        # if p > 0.94:
+        #     print('突破券满了')
+        #     break
+        # else:
+        #     x, y, p = tt.locateImg(jieshou)
+        #     if p > 0.95:
+        #         tt.mouseClick(x, y, 'left')
+        #         print('接受组队')
+
+        x, y, p = tt.locateImg(jieshou)
+        if p > 0.95:
+            tt.mouseClick(x, y, 'left')
+            print('接受组队')
+
+        x, y, p = tt.locateImg(likai, None)
+        if p > 0.85:
+            x = random.randint(40, 75)
+            y = random.randint(40, 75)
+            tt.mouseClick(x, y)
+            print('点击返回')
+
+
+
+
+
+
+        if number>=116:
             break
 
 

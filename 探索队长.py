@@ -33,6 +33,8 @@ if __name__ == '__main__':
     k10 = './tansuo/k10.png'
     k17 = './tansuo/k17.png'
     tansuo = './tansuo/tansuo.png'
+    duiyou = './tansuo/duiyou.png'
+    wutili = './tansuo/wutili.png'
 
     yingbing = './tansuo/yingbing.png'
 
@@ -48,12 +50,13 @@ if __name__ == '__main__':
     waibaoxiang2 = './tansuo/waibaoxiang2.png'
     tuichu = './tansuo/tuichu.png'
     tili = './tansuo/tili.png'
+    ji57 = './jiesuan/57ji.png'
 
     queding = './jiesuan/queding.png'
     tiaozhan = './yuhun/tiaozhan.png'
 
 
-    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-1')
+    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
     print(handle)
     h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
     print(h)
@@ -63,6 +66,12 @@ if __name__ == '__main__':
     sainum = 0;
     bossStop = 0;
     while True:
+
+        x, y, p = tt.locateImg(ji57)
+        if p > 0.95:
+            print("已经57级")
+            break
+
         # time.sleep(1)
         # 悬赏
         x, y, p = tt.locateImg(xuanshang)
@@ -188,7 +197,7 @@ if __name__ == '__main__':
                                 print('点击返回')
             else:
                 x = random.randint(x - 15, x + 15)
-                y = random.randint(y - 15, y + 15)
+                y = random.randint(y - 5, y + 5)
                 tt.mouseClick(x, y, 'left')
                 print('找到boss,点击了:', x, y)
                 bossStop = 1;
@@ -203,7 +212,8 @@ if __name__ == '__main__':
             print('找不到樱饼')
 
         x, y, p = tt.locateImg(tiaozhan)
-        if p > 0.95:
+        x1, y1, p1 = tt.locateImg(duiyou)
+        if p > 0.95 and p1 <0.85:
             # 设置均值和标准差
             mu_x, sigma_x = 1186, 15  # x坐标的均值和标准差
             mu_y, sigma_y = 630, 10  # y坐标的均值和标准差
@@ -267,7 +277,11 @@ if __name__ == '__main__':
             bossStop = 0
             print('点击确定')
 
-        if number>=100:
+        x, y, p2 = tt.locateImg(wutili)
+        if p2 > 0.85:
+            break
+
+        if number>=116:
             break
 
 

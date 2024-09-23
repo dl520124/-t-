@@ -21,6 +21,7 @@ if __name__ == '__main__':
 
   buzu = './huodong/buzu.png'
   queren = './huodong/queren.png'
+  h999 = './huodong/h999.png'
 
   img = cv2.imread('888.bmp')
 
@@ -42,6 +43,12 @@ if __name__ == '__main__':
       if p > 0.85:
           tt.mouseClick(x, y, 'left')
           print('掉线确认')
+
+      x, y, p = tt.locateImg(h999)
+      if p > 0.98:
+          print(p)
+          print('完成999')
+          break
 
       xunerr = xunerr + 1;
       # 悬赏
@@ -156,13 +163,13 @@ if __name__ == '__main__':
           x, y, p = tt.locateImg(buzu)
           if p > 0.80:
               break;
-          time.sleep(2)
+          time.sleep(0.5)
 
 
 
 
 
-      if num>=106:
+      if num>=20:
          print('已经打了',num,'局，结束爬塔！')
          break;
 

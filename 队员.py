@@ -10,6 +10,8 @@ if __name__ == '__main__':
   jiesuan1 = './huodong/jiesuan1.png'
   jiesuan2 = './huodong/jiesuan2.png'
   jiesuan3 = './jiesuan/jiesuan3.png'
+  tilibuzu = './jiesuan/tilibuzu.png'
+
   tiaozhan = './huodong/tiaozhan.png'
   jiangli = './huodong/jiangli.png'
 
@@ -49,6 +51,11 @@ if __name__ == '__main__':
             if p > 0.85:
               tt.mouseClick(x, y, 'left')
               print('哪个傻逼给我其他悬赏')
+
+      x, y, p = tt.locateImg(tilibuzu)
+      if p > 0.85:
+          break
+
 
 
 
@@ -129,7 +136,7 @@ if __name__ == '__main__':
       #    print('掉线，退出')
       #    break;
 
-      if num>=12:
+      if num>=14:
          print('已经打了',num,'局，结束御魂！')
          break;
 

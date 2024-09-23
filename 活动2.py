@@ -155,11 +155,11 @@ if __name__ == '__main__':
           x, y, p = tt.locateImg(buzu)
           if p > 0.80:
               break;
-          time.sleep(2)
+          time.sleep(0.5)
 
 
 
-      if num>=300:
+      if num>=150:
          print('已经打了300局，结束爬塔！')
          break;
 

@@ -21,6 +21,8 @@ if __name__ == '__main__':
   jieshou = './huodong/jieshou.png'
   jujue = './huodong/jujue.png'
 
+  tupoyemian = './jiesuan/tupoyemian.png'
+
 
   img = cv2.imread('888.bmp')
 
@@ -132,12 +134,28 @@ if __name__ == '__main__':
         y = random.randint(y-15, y+15)
         tt.mouseClick(x, y, 'left')
         print('点击进攻')
-        time.sleep(0.5) #必要的延迟
+        time.sleep(2) #必要的延迟
 
-      x, y, p = tt.locateImg(wancheng)
-      x2, y2, p2 = tt.locateImg(tupotu)
-      if p > 0.85 and p2 < 0.9:
-          print(p,p2)
-          print('突破已完成，不愧是tt，真棒棒！')
-          break
+      # x, y, p = tt.locateImg(wancheng)
+      # x2, y2, p2 = tt.locateImg(tupotu)
+      # if p > 0.85 and p2 < 0.85:
+      #     print(p,p2)
+      #     print('突破已完成，不愧是tt，真棒棒！')
+      #     break
+
+      x, y, p = tt.locateImg(tupoyemian)
+      if p > 0.85:
+          x, y, p = tt.locateImg(wancheng)
+          if p > 0.85:
+              list = tt.locateAllImg(tupotu)
+              print(list)
+              x2, y2, p2 = tt.locateImg(tupotu)
+              x3, y3, p3 = tt.locateImg(jingong)
+              if p > 0.85 and p2 < 0.85 and len(list)<=0 and p3<0.85:
+                  print(p, p2)
+                  print('突破已完成，不愧是tt，真棒棒！')
+                  break
+
+
+
 

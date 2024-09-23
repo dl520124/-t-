@@ -416,7 +416,7 @@ if __name__ == '__main__':
         #     break
 
 
-        if xunhuan_time - jiesuan_time >= 300 and jiesuan_time !=0:
+        if xunhuan_time - jiesuan_time >= 200 and jiesuan_time !=0:
            print('探索跳转到掉线')
            print("xunhuan_time:",xunhuan_time,",jiesuan_time:",jiesuan_time)
            tansuo_state = 2

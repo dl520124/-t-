@@ -333,12 +333,12 @@ if __name__ == '__main__':
             print("已经57级")
             break
 
-        x, y, p = tt.locateImg(ji53)
-        if p > 0.95:
-            print("已经53级")
-            break
+        # x, y, p = tt.locateImg(ji53)
+        # if p > 0.95:
+        #     print("已经53级")
+        #     break
 
-        if xunhuan_time - jiesuan_time >= 300 and jiesuan_time !=0:
+        if xunhuan_time - jiesuan_time >= 200 and jiesuan_time !=0:
            tansuo_state = 1
 
 
