@@ -55,9 +55,9 @@ if __name__ == '__main__':
     tuichuk28 = './jiesuan/tuichuk28.png'
 
 
-    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-1')
+    handle = win32gui.FindWindow('LDPlayerMainFrame', '雷电模拟器-2')
     print(handle)
-    h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
+    h = win32gui.FindWindowEx(handle, None, 'RenderWindow', 'TheRender')
     print(h)
     tt = LiuXingIT(h)
     number = 0;
@@ -126,6 +126,8 @@ if __name__ == '__main__':
 
 
 
+
+
         x, y, p = tt.locateImg(neibaoxiang, None)
         if p > 0.80:
             print('有内宝箱')
@@ -174,7 +176,7 @@ if __name__ == '__main__':
 
 
 
-        if number>=116:
-            break
+        # if number>=116:
+        #     break
 
 

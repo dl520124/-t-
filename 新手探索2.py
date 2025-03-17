@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
 
 
-    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-1')
+    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-3')
     print(handle)
     h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
     print(h)

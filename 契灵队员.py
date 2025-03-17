@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
   img = cv2.imread('888.bmp')
 
-  handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
+  handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-1')
   print(handle)
   h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
   print(h)
@@ -172,7 +172,7 @@ if __name__ == '__main__':
       #    print('掉线，退出')
       #    break;
 
-      if num>=14:
-         print('已经打了',num,'局，结束御魂！')
-         break;
+      # if num>=14:
+      #    print('已经打了',num,'局，结束御魂！')
+      #    break;
 

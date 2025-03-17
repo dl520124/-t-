@@ -50,15 +50,15 @@ if __name__ == '__main__':
     waibaoxiang2 = './tansuo/waibaoxiang2.png'
     tuichu = './tansuo/tuichu.png'
     tili = './tansuo/tili.png'
-    ji57 = './jiesuan/57ji.png'
+    ji51 = './jiesuan/51ji.png'
 
     queding = './jiesuan/queding.png'
     tiaozhan = './yuhun/tiaozhan.png'
 
 
-    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
+    handle = win32gui.FindWindow('LDPlayerMainFrame', '雷电模拟器-1')
     print(handle)
-    h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
+    h = win32gui.FindWindowEx(handle, None, 'RenderWindow', 'TheRender')
     print(h)
     tt = LiuXingIT2(h)
     number = 0;
@@ -67,12 +67,12 @@ if __name__ == '__main__':
     bossStop = 0;
     while True:
 
-        x, y, p = tt.locateImg(ji57)
-        if p > 0.95:
-            print("已经57级")
+        x, y, p = tt.locateImg(ji51)
+        if p > 0.92:
+            print("已经51级")
             break
 
-        # time.sleep(1)
+        time.sleep(1)
         # 悬赏
         x, y, p = tt.locateImg(xuanshang)
         if p > 0.85:
@@ -281,7 +281,7 @@ if __name__ == '__main__':
         if p2 > 0.85:
             break
 
-        if number>=116:
-            break
+        # if number>=116:
+        #     break
 
 

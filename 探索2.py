@@ -48,7 +48,7 @@ if __name__ == '__main__':
     waibaoxiang2 = './tansuo/waibaoxiang2.png'
     tuichu = './tansuo/tuichu.png'
     tili = './tansuo/tili.png'
-    ji57 = './jiesuan/57ji.png'
+    ji51 = './jiesuan/51ji.png'
     ji53 = './jiesuan/53ji.png'
     buzu3 = './jiesuan/buzu3.png'
 
@@ -82,6 +82,11 @@ if __name__ == '__main__':
 
     while True:
 
+     x, y, p = tt.locateImg(ji51)
+     if p > 0.92:
+            print("已经51级")
+            break
+
      if dianxiannum > 0 :
         print('掉线次数',dianxiannum)
      #定义循环的时间戳
@@ -89,6 +94,11 @@ if __name__ == '__main__':
 
 
      if tansuo_state == 0:  # 探索状态
+        x, y, p = tt.locateImg(ji51)
+        if p > 0.92:
+             print(p)
+             print("已经51级")
+             break
         # time.sleep(1)
         # 悬赏
         x, y, p = tt.locateImg(xuanshang)
@@ -328,9 +338,9 @@ if __name__ == '__main__':
             tt.mouseClick(x, y)
             print('点击返回')
 
-        x, y, p = tt.locateImg(ji57)
-        if p > 0.95:
-            print("已经57级")
+        x, y, p = tt.locateImg(ji51)
+        if p > 0.92:
+            print("已经51级")
             break
 
         # x, y, p = tt.locateImg(ji53)

@@ -9,6 +9,10 @@ import numpy as np
 if __name__ == '__main__':
   zhunbei = './daoguan/zhunbei.png'
   lvbiao = './daoguan/lvbiao.png'
+  hua1 = './daoguan/hua1.png'
+  hua2 = './daoguan/hua2.png'
+  hua3 = './daoguan/hua3.png'
+  hua4 = './daoguan/hua4.png'
   tianzhao = './daoguan/tianzhao.png'
   daoguan = './jiesuan/daoguan.png'
   img = cv2.imread('888.bmp')
@@ -23,9 +27,9 @@ if __name__ == '__main__':
   jiesuan2 = './huodong/jiesuan2.png'
   shibai = './huodong/shibai.png'
 
-  handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
+  handle = win32gui.FindWindow('LDPlayerMainFrame', '雷电模拟器')
   print(handle)
-  h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
+  h = win32gui.FindWindowEx(handle, None, 'RenderWindow', 'TheRender')
   print(h)
   tt = LiuXingIT(h)
 
@@ -53,21 +57,26 @@ if __name__ == '__main__':
       time.sleep(0.5)
       x, y, p = tt.locateImg(zhunbei)
       print(p)
-      if p > 0.97:
+      if p > 0.89:
           x = random.randint(x, x + 30)
           y = random.randint(y - 15, y + 15)
           mouse_click(x, y)
           print('点击准备')
           time.sleep(1.5)
           x, y, p = tt.locateImg(lvbiao)
+          x1, y1, p1 = tt.locateImg(zhunbei)
           print(p)
-          if p < 0.80:
+          if p < 0.80 and p1 < 0.8:
               print('没有找到绿标')
               x, y, p = tt.locateImg(tianzhao)
-              if p > 0.80:
+              x1, y1, p1 = tt.locateImg(zhunbei)
+              if p > 0.70 and p1 < 0.8:
                  mouse_click(x, y)
+                 print('点击天照')
+
           else:
               print('有绿标')
+
 
 
 
@@ -99,9 +108,7 @@ if __name__ == '__main__':
           tt.mouseClick(x, y, 'left')
           print('结算1点击x=', x, 'y=', y)
           time.sleep(1)
-          num = num + 1;
-          xunerr = 0;
-          print('num=', num);
+
 
       x, y, p = tt.locateImg(jiesuan2)
       if p > 0.85:
@@ -136,7 +143,7 @@ if __name__ == '__main__':
           tt.mouseClick(x, y, 'left')
           print('结算2点击x=', x, 'y=', y)
           time.sleep(1)
-          xunerr = 0;
+
 
 
 

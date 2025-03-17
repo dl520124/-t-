@@ -26,9 +26,13 @@ if __name__ == '__main__':
     jiesuan2 = './jiesuan/jiesuan2.png'
     zhunbei = './jiesuan/zhunbei.png'
 
-    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
+    handle = win32gui.FindWindow('LDPlayerMainFrame', '雷电模拟器')
     print(handle)
-    h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
+    h = win32gui.FindWindowEx(handle, None, 'RenderWindow', 'TheRender')
+
+    # handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
+    # print(handle)
+    # h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
     print(h)
     tt = LiuXingIT(h)
 

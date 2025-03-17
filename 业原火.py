@@ -25,14 +25,13 @@ if __name__ == '__main__':
 
   img = cv2.imread('888.bmp')
 
-  handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
+  handle = win32gui.FindWindow('LDPlayerMainFrame', '雷电模拟器')
   print(handle)
-  h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
+  h = win32gui.FindWindowEx(handle, None, 'RenderWindow', 'TheRender')
   print(h)
   tt = LiuXingIT(h)
 
 
-  handle =  win32gui.FindWindow(None,'MuMu模拟器12')  #第一个参数是类目（可以不写），第二个参数名字
 
   num = 0;
   xunerr = 0;
@@ -167,11 +166,11 @@ if __name__ == '__main__':
 
 
 
-      if num>=120:
+      if num>=405:
          print('已经打了',num,'局，结束爬塔！')
          break;
 
-      if xunerr>=400:
-         print('掉线，退出')
-         break;
+      # if xunerr>=400:
+      #    print('掉线，退出')
+      #    break;
 

@@ -2,7 +2,7 @@ import pyautogui
 import win32gui
 import time
 import cv2
-from liuxingIT import LiuXingIT
+from liuxingIT2 import LiuXingIT2
 import random
 import numpy as np
 
@@ -33,15 +33,17 @@ if __name__ == '__main__':
   jieshou = './huodong/jieshou.png'
   jujue = './huodong/jujue.png'
 
-  handle = win32gui.FindWindow('LDPlayerMainFrame', '雷电模拟器')
-  print(handle)
-  h = win32gui.FindWindowEx(handle, None, 'RenderWindow', 'TheRender')
 
-  # handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
+  # handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-2')
   # print(handle)
   # h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
+
+  handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-1')
+  print(handle)
+  h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
+
   print(h)
-  tt = LiuXingIT(h)
+  tt = LiuXingIT2(h)
 
   # 定义生成随机坐标的函数
   # 定义生成随机坐标的函数

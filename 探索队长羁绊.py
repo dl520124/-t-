@@ -56,7 +56,7 @@ if __name__ == '__main__':
     tiaozhan = './yuhun/tiaozhan.png'
 
 
-    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
+    handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-3')
     print(handle)
     h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
     print(h)
@@ -181,7 +181,7 @@ if __name__ == '__main__':
                             # time.sleep(1)
                             sainum = sainum + 1;
 
-                            if sainum >= 3:
+                            if sainum >= 2:
                                 print('滑动超过3次，退出')
                                 x = random.randint(40, 75)
                                 y = random.randint(40, 75)
@@ -282,7 +282,7 @@ if __name__ == '__main__':
         if p2 > 0.85:
             break
 
-        if number>=176:
+        if number>=999:
             break
 
 

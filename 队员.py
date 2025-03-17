@@ -24,9 +24,10 @@ if __name__ == '__main__':
 
   img = cv2.imread('888.bmp')
 
-  handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
+  handle = win32gui.FindWindow('LDPlayerMainFrame', '雷电模拟器')
   print(handle)
-  h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
+  h = win32gui.FindWindowEx(handle, None, 'RenderWindow', 'TheRender')
+  print(h)
   print(h)
   tt = LiuXingIT2(h)
 
@@ -136,7 +137,7 @@ if __name__ == '__main__':
       #    print('掉线，退出')
       #    break;
 
-      if num>=14:
+      if num>=49:
          print('已经打了',num,'局，结束御魂！')
          break;
 

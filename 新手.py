@@ -73,9 +73,9 @@ if __name__ == '__main__':
   jiangli2 = './xinshou/jiangli2.png'
   tansuo4 = './xinshou/tansuo4.png'
 
-  handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
+  handle = win32gui.FindWindow('LDPlayerMainFrame', '雷电模拟器-1')
   print(handle)
-  h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
+  h = win32gui.FindWindowEx(handle, None, 'RenderWindow', 'TheRender')
   print(h)
   tt = LiuXingIT(h)
 

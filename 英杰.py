@@ -11,7 +11,7 @@ if __name__ == '__main__':
   jiesuan2 = './huodong/jiesuan2.png'
   jiesuan4 = './huodong/jiesuan4.png'
   shibai = './huodong/shibai.png'
-  tiaozhan = './huodong/tiaozhan.png'
+  tiaozhan = './huodong/yingjie.png'
   jiangli = './huodong/jiangli.png'
 
   #悬赏
@@ -26,15 +26,9 @@ if __name__ == '__main__':
 
   img = cv2.imread('888.bmp')
 
-  # handle = win32gui.FindWindow('LDPlayerMainFrame', '雷电模拟器-1')
-  # print(handle)
-  # h = win32gui.FindWindowEx(handle, None, 'RenderWindow', 'TheRender')
-
-  handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
+  handle = win32gui.FindWindow('LDPlayerMainFrame', '雷电模拟器')
   print(handle)
-  h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
-
-
+  h = win32gui.FindWindowEx(handle, None, 'RenderWindow', 'TheRender')
   print(h)
   tt = LiuXingIT(h)
 
@@ -193,7 +187,7 @@ if __name__ == '__main__':
 
 
 
-      if num>=200:
+      if num>=400:
          print('已经打了',num,'局，结束爬塔！')
          break;
 

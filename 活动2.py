@@ -9,6 +9,7 @@ import numpy as np
 if __name__ == '__main__':
   jiesuan1 = './huodong/jiesuan1.png'
   jiesuan2 = './huodong/jiesuan2.png'
+  jiesuan4 = './huodong/jiesuan4.png'
   shibai = './huodong/shibai.png'
   tiaozhan = './huodong/tiaozhan.png'
   jiangli = './huodong/jiangli.png'
@@ -24,9 +25,14 @@ if __name__ == '__main__':
 
   img = cv2.imread('888.bmp')
 
+  # handle = win32gui.FindWindow('LDPlayerMainFrame', '雷电模拟器-2')
+  # print(handle)
+  # h = win32gui.FindWindowEx(handle, None, 'RenderWindow', 'TheRender')
+
   handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-1')
   print(handle)
   h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
+
   print(h)
   tt = LiuXingIT2(h)
 
@@ -97,6 +103,24 @@ if __name__ == '__main__':
         print('结算2点击x=', x, 'y=', y)
         time.sleep(1)
 
+      x, y, p = tt.locateImg(jiesuan4)
+      if p > 0.85:
+
+          # 生成符合指定范围的正态分布的 x 和 y 坐标
+          mu, sigma = 1200, 30  # 均值和标准差
+          x = np.random.normal(mu, sigma)
+          while x < 1144 or x > 1256:
+              x = np.random.normal(mu, sigma)
+
+          mu, sigma = 437, 100  # 均值和标准差
+          y = np.random.normal(mu, sigma)
+          while y < 185 or y > 689:
+              y = np.random.normal(mu, sigma)
+          tt.mouseClick(x, y, 'left')
+          print('结算2点击x=', x, 'y=', y)
+          time.sleep(1)
+
+
       x, y, p = tt.locateImg(shibai)
       if p > 0.85:
 
@@ -159,11 +183,11 @@ if __name__ == '__main__':
 
 
 
-      if num>=150:
+      if num>=200:
          print('已经打了300局，结束爬塔！')
          break;
 
-      if xunerr>=400:
-         print('掉线，退出')
-         break;
+      # if xunerr>=400:
+      #    print('掉线，退出')
+      #    break;
 

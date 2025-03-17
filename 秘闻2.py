@@ -28,6 +28,10 @@ if __name__ == '__main__':
 
   img = cv2.imread('888.bmp')
 
+  # handle = win32gui.FindWindow('LDPlayerMainFrame', '雷电模拟器-2')
+  # print(handle)
+  # h = win32gui.FindWindowEx(handle, None, 'RenderWindow', 'TheRender')
+
   handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-1')
   print(handle)
   h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
@@ -129,7 +133,7 @@ if __name__ == '__main__':
           time.sleep(2)
 
 
-      if num >=6:
+      if num >=4:
           break
 
 

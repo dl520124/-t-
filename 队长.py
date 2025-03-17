@@ -11,7 +11,9 @@ if __name__ == '__main__':
   jiesuan2 = './huodong/jiesuan2.png'
   jiesuan3 = './jiesuan/jiesuan3.png'
   tiaozhan = './yuhun/tiaozhan.png'
+  hunhai = './yuhun/hunhai.png'
   duiyou2 = './yuhun/duiyou2.png'
+  duiyouhun = './yuhun/duiyouhun.png'
   jiangli = './huodong/jiangli.png'
   tilibuzu = './jiesuan/tilibuzu.png'
 
@@ -24,9 +26,9 @@ if __name__ == '__main__':
 
   img = cv2.imread('888.bmp')
 
-  handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-1')
+  handle = win32gui.FindWindow('LDPlayerMainFrame', '雷电模拟器-1')
   print(handle)
-  h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
+  h = win32gui.FindWindowEx(handle, None, 'RenderWindow', 'TheRender')
   print(h)
   tt = LiuXingIT(h)
 
@@ -156,6 +158,33 @@ if __name__ == '__main__':
                  print('点击挑战x=', x, 'y=', y)
                  time.sleep(2)
 
+      x, y, p = tt.locateImg(hunhai)
+      if p > 0.85:
+          print('已经找到hunhai的图')
+          time.sleep(1)
+          err = err + 1;
+          print('err=', err)
+          x, y, p = tt.locateImg(duiyouhun)  # 如果找不到则已有队员2进入
+          # x, y, p = tt.locateImg(duiyou2, region=(913, 136, 1240, 550))  # 如果找不到则已有队员3进入
+          if p > 0.80:
+              print('队员2已经进入')
+              err = 0;
+              # 设置均值和标准差
+              mu_x, sigma_x = 1221.5, 15  # x坐标的均值和标准差
+              mu_y, sigma_y = 643.5, 10  # y坐标的均值和标准差
+              # 如果你希望大部分数据点都落在范围内，可以选择较小的标准差；如果希望数据点更分散，可以选择较大的标准差。
+
+              # 生成符合正态分布的坐标点
+              x = np.random.normal(mu_x, sigma_x)
+              y = np.random.normal(mu_y, sigma_y)
+
+              # 限制坐标范围
+              x = np.clip(x, 1193, 1249)
+              y = np.clip(y, 619, 668)
+              tt.mouseClick(x, y, 'left')
+              print('点击挑战x=', x, 'y=', y)
+              time.sleep(2)
+
       if err>=10:
          print('队友掉线，停止')
          break;
@@ -167,7 +196,7 @@ if __name__ == '__main__':
       #    break;
 
 
-      if num>=14:
+      if num>=49:
          print('已经打了',num,'局，结束御魂！')
          break;
 

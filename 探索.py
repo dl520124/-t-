@@ -57,6 +57,9 @@ if __name__ == '__main__':
     tingyuan = './tansuo/tingyuan.png'
     queding = './jiesuan/queding.png'
 
+    # handle = win32gui.FindWindow('LDPlayerMainFrame', '雷电模拟器')
+    # print(handle)
+    # h = win32gui.FindWindowEx(handle, None, 'RenderWindow', 'TheRender')
 
 
     handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12')
