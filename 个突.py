@@ -34,7 +34,7 @@ if __name__ == '__main__':
   jujue = './huodong/jujue.png'
 
 
-  handle = win32gui.FindWindow('Qt5156QWindowIcon', 'MuMu模拟器12-1')
+  handle = win32gui.FindWindow('Qt5156QWindowIcon', '大号')
   print(handle)
   h = win32gui.FindWindowEx(handle, None, 'Qt5156QWindowIcon', 'MuMuPlayer')
   print(h)
@@ -71,7 +71,7 @@ if __name__ == '__main__':
     return None, None
 
 
-  # 需要正态分布点击的图片列表
+  # 需要正态分布点击的图片列表123555
   settlement_images = [jiesuan1, jiesuan2,diancuo,qiguai]
   # 定义突破状态变量
   tupo_state = 0
